@@ -2,11 +2,6 @@
 ..\FrameXML\UI.xsd">
 
     <Script file="ScubaLoot.lua"/>
-    <Scripts>
-        <OnLoad>
-                ScubaLoot_Init()
-        </OnLoad>
-    </Scripts>
 
     <CheckButton name="ScubaLootCheckboxTemplate" hidden="false" virtual="true">
         <Size>
@@ -41,8 +36,17 @@
             <Anchor point="CENTER" />
         </Anchors>
         <Scripts>
+            <OnLoad>
+                ScubaLoot_OnLoad()
+            </OnLoad>
+            <OnEvent>
+                ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
+            </OnEvent>
+            <OnUpdate>
+                ScubaLoot_OnEvent_OnUpdate()
+            </OnUpdate>
             <OnShow>
-                    ScubaLootFrameTitleText_OnShow()
+                ScubaLootFrameTitleText_OnShow()
             </OnShow>
         </Scripts>
         <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
