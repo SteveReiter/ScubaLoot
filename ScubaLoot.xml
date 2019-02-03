@@ -1,5 +1,13 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
+
+    <Script file="ScubaLoot.lua"/>
+    <Scripts>
+        <OnLoad>
+                ScubaLoot_Init()
+        </OnLoad>
+    </Scripts>
+
     <CheckButton name="ScubaLootCheckboxTemplate" hidden="false" virtual="true">
         <Size>
             <AbsDimension x="32" y="32"/>
@@ -27,11 +35,16 @@
     <Frame name="ScubaLootFrame" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true">
         <TitleRegion setAllPoints="true"/>
         <Size>
-            <AbsDimension x="225" y="295" />
+            <AbsDimension x="325" y="295" />
         </Size>
         <Anchors>
             <Anchor point="CENTER" />
         </Anchors>
+        <Scripts>
+            <OnShow>
+                    ScubaLootFrameTitleText_OnShow()
+            </OnShow>
+        </Scripts>
         <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
                   tile="true">
             <BackgroundInsets>
@@ -63,7 +76,7 @@
                     </Anchors>
                 </Texture>
 
-                <FontString name="ScubaLootFrameTitleText" inherits="GameFontNormal" text="ScubaLoot V1.0">
+                <FontString name="ScubaLootFrameTitleText" inherits="GameFontNormal" text="Hi">
                     <Anchors>
                         <Anchor point="TOP" relativeTo="ScubaLootFrame">
                             <Offset>
