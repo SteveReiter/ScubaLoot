@@ -3,6 +3,8 @@
 
     <Script file="ScubaLoot.lua"/>
 
+    <!-- ScubaLootCheckboxTemplate -->
+
     <CheckButton name="ScubaLootCheckboxTemplate" hidden="false" virtual="true">
         <Size>
             <AbsDimension x="32" y="32"/>
@@ -27,6 +29,67 @@
         <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
     </CheckButton>
 
+    <!-- ScubaLootSortTemplate -->
+
+    <Button name="ScubaLootSortTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="210" y="24"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="$parentIcon">
+                    <Size>
+                        <AbsDimension x="22" y="22"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="4" y="-1"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <FontString name="$parentName" font="GameFontHighlight" justifyH="LEFT">
+                    <Size>
+                        <AbsDimension x="170" y="22"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="LEFT" relativeTo="$parentIcon" relativePoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="4" y="0"/>
+                            </Offset>
+                        </Anchor>
+                        <Anchor point="RIGHT"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestLogTitleHighlight" hidden="true" alphaMode="ADD">
+                    <Size>
+                        <AbsDimension x="210" y="24"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnEnter>
+                    getglobal(this:GetName().."Highlight"):Show()
+                    ScubaLoot_ShowTooltip()
+            </OnEnter>
+            <OnLeave>
+                    if not this.lockedHighlight then
+                        getglobal(this:GetName().."Highlight"):Hide()
+                    end
+                    GameTooltip:Hide()
+            </OnLeave>
+        </Scripts>
+    </Button>
+
+    <!-- ScubaLootFrame - main frame for the gui -->
+
     <Frame name="ScubaLootFrame" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true">
         <TitleRegion setAllPoints="true"/>
         <Size>
@@ -42,9 +105,6 @@
             <OnEvent>
                 ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
             </OnEvent>
-            <OnUpdate>
-                ScubaLoot_OnEvent_OnUpdate()
-            </OnUpdate>
             <OnShow>
                 ScubaLootFrameTitleText_OnShow()
             </OnShow>
@@ -92,8 +152,114 @@
             </Layer>
         </Layers>
 
+        <!-- ScubaLootFrame's internal frames -->
+
         <Frames>
-            <!--<CheckButton name="BattleShoutCheckbox" inherits="BuffBlockCheckboxTemplate">
+
+            <!-- individual buttons for each link -->
+
+            <Button name="ScubaLootMainItem" inherits="ScubaLootSortTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootFrame">
+                        <Offset>
+                            <AbsDimension x="10" y="-20"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+
+            <Button name="ScubaLootSort1" inherits="ScubaLootSortTemplate" id="1">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootMainItem">
+                        <Offset>
+                            <AbsDimension x="10" y="-20"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort2" inherits="ScubaLootSortTemplate" id="2">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort1" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort3" inherits="ScubaLootSortTemplate" id="3">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort2" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort4" inherits="ScubaLootSortTemplate" id="4">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort3" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort5" inherits="ScubaLootSortTemplate" id="5">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort4" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort6" inherits="ScubaLootSortTemplate" id="6">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort5" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort7" inherits="ScubaLootSortTemplate" id="7">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort6" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort8" inherits="ScubaLootSortTemplate" id="8">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort7" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootSort9" inherits="ScubaLootSortTemplate" id="9">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootSort8" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Button>
+
+            <!-- scroll frame to contain the buttons above -->
+
+            <ScrollFrame name="ScubaLootScrollFrame" inherits="FauxScrollFrameTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootFrame"/>
+                    <Anchor point="BOTTOMRIGHT" relativeTo="ScubaLootFrame"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture file="Interface\ChatFrame\ChatFrameBackground">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="0" y="2"/>
+                                    </Offset>
+                                </Anchor>
+                                <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="25" y="-2"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                            <Gradient>
+                                <MinColor r="0" g="0" b="0" a="0"/>
+                                <MaxColor r="0" g="0" b="0" a="1"/>
+                            </Gradient>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Scripts>
+                    <OnVerticalScroll>
+                        FauxScrollFrame_OnVerticalScroll(24, ScubaLoot_ScrollFrameUpdate)
+                    </OnVerticalScroll>
+                    <OnShow>
+                            ScubaLoot_ScrollFrameUpdate()
+                    </OnShow>
+                </Scripts>
+            </ScrollFrame>
+
+            <!---->
+
+            <CheckButton name="BattleShoutCheckbox" inherits="BuffBlockCheckboxTemplate">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="BuffBlockOptions">
                         <Offset>
@@ -109,10 +275,11 @@
 
                     </OnClick>
                 </Scripts>
-            </CheckButton>-->
-            <!--<Button name="BuffBlockClose" inherits="GameMenuButtonTemplate" text="Close">
+            </CheckButton>
+
+            <Button name="ScubaLootClose" inherits="GameMenuButtonTemplate" text="X">
                 <Anchors>
-                    <Anchor point="CENTER" relativePoint="BOTTOM" relativeTo="BuffBlockOptions">
+                    <Anchor point="TOPRIGHT" relativePoint="TOP" relativeTo="SCUBALOOTFRAME">
                         <Offset>
                             <AbsDimension x="0" y="30" />
                         </Offset>
@@ -123,7 +290,10 @@
                             this:GetParent():Hide();
                     </OnClick>
                 </Scripts>
-            </Button>-->
+            </Button>
+
+            <!---->
+
         </Frames>
     </Frame>
 </Ui>
