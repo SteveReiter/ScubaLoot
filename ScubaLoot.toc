@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: ScubaLoot
+## Version: 1.0
+## Notes: Scuba cop loot council addon
+## Author: Kaymon, Zela
+ScubaLoot.lua
+ScubaLoot.xml
