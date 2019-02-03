@@ -1,0 +1,112 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <CheckButton name="ScubaLootCheckboxTemplate" hidden="false" virtual="true">
+        <Size>
+            <AbsDimension x="32" y="32"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">relativeTo="ScubaLootFrame"
+                <FontString name="$parentText" inherits="GameFontNormalSmall" text="">
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="0" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
+        <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
+        <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
+        <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
+        <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
+    </CheckButton>
+
+    <Frame name="ScubaLootFrame" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true">
+        <TitleRegion setAllPoints="true"/>
+        <Size>
+            <AbsDimension x="225" y="295" />
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+                  tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11" />
+                <Size>
+                    <AbsDimension x="128" y="17" />
+                </Size>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32" />
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32" />
+            </EdgeSize>
+        </Backdrop>
+
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="ScubaLootFrameTitle" file="Interface\DialogFrame\UI-DialogBox-Header">
+                    <Size>
+                        <AbsDimension x="276" y="64" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset>
+                                <AbsDimension x="0" y="12" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+
+                <FontString name="ScubaLootFrameTitleText" inherits="GameFontNormal" text="ScubaLoot V1.0">
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="ScubaLootFrame">
+                            <Offset>
+                                <AbsDimension x="0" y="-2" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+
+        <Frames>
+            <!--<CheckButton name="BattleShoutCheckbox" inherits="BuffBlockCheckboxTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="BuffBlockOptions">
+                        <Offset>
+                            <AbsDimension x="20" y="-45" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnShow>
+
+                    </OnShow>
+                    <OnClick>
+
+                    </OnClick>
+                </Scripts>
+            </CheckButton>-->
+            <!--<Button name="BuffBlockClose" inherits="GameMenuButtonTemplate" text="Close">
+                <Anchors>
+                    <Anchor point="CENTER" relativePoint="BOTTOM" relativeTo="BuffBlockOptions">
+                        <Offset>
+                            <AbsDimension x="0" y="30" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                            this:GetParent():Hide();
+                    </OnClick>
+                </Scripts>
+            </Button>-->
+        </Frames>
+    </Frame>
+</Ui>
