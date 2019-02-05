@@ -5,16 +5,13 @@
 
     <!-- ScubaLootCheckboxTemplate -->
 
-    <CheckButton name="ScubaLootCheckboxTemplate" hidden="false" virtual="true">
+    <CheckButton name="ScubaLootRowCheckBoxTemplate" hidden="true" virtual="true">
         <Size>
             <AbsDimension x="32" y="32"/>
         </Size>
         <Scripts>
-            <OnShow>
-
-            </OnShow>
             <OnClick>
-
+                ScubaLoot_RegisterVote(this:GetID())
             </OnClick>
         </Scripts>
         <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
@@ -24,9 +21,32 @@
         <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
     </CheckButton>
 
-    <!-- ScubaLootSortTemplate -->
+    <!-- SLTestButtonTemplate -->
+    <!--<Button name="SLTestButtonTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="210" y="24"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString name="$parentText" inherits="GameFontNormal" text="Finished">
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="-1" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
 
-    <Button name="ScubaLootItemRowTemplate" virtual="true">
+            </OnClick>
+        </Scripts>
+    </Button>-->
+
+    <Button name="ScubaLootItemRowTemplate" virtual="true" hidden="true">
         <Size>
             <AbsDimension x="210" y="24"/>
         </Size>
@@ -43,33 +63,38 @@
                             </Offset>
                         </Anchor>
                     </Anchors>
+                    <Scripts>
+                        <OnClick>
+                                ScubaLoot_FinishedVoting()
+                        </OnClick>
+                    </Scripts>
                     <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
                     <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
                     <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
                     <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
                     <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
                 </CheckButton>-->
-                <!--<FontString name="$parentPlayer" font="GameFontHighlight" justifyH="LEFT">
+                <FontString name="$parentPlayer" font="GameFontHighlight" justifyH="LEFT">
                     <Size>
-                        <AbsDimension x="100" y="22"/>
+                        <AbsDimension x="50" y="22"/>
                     </Size>
                     <Anchors>
-                        <Anchor point="LEFT" relativeTo="$parentCheckbox" relativePoint="RIGHT">
+                        <Anchor point="LEFT">
                             <Offset>
                                 <AbsDimension x="4" y="0"/>
                             </Offset>
                         </Anchor>
                         <Anchor point="RIGHT"/>
                     </Anchors>
-                </FontString>-->
+                </FontString>
                 <Texture name="$parentIcon">
                     <Size>
                         <AbsDimension x="22" y="22"/>
                     </Size>
                     <Anchors>
-                        <Anchor point="LEFT" relativeTo="$parentPlayer">
+                        <Anchor point="LEFT" relativeTo="$parentPlayer" relativePoint="LEFT">
                             <Offset>
-                                <AbsDimension x="4" y="-1"/>
+                                <AbsDimension x="70" y="-1"/>
                             </Offset>
                         </Anchor>
                     </Anchors>
@@ -118,7 +143,7 @@
     <Frame name="ScubaLootFrame" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true">
         <TitleRegion setAllPoints="true"/>
         <Size>
-            <AbsDimension x="325" y="295" />
+            <AbsDimension x="325" y="80" />
         </Size>
         <Anchors>
             <Anchor point="CENTER" />
@@ -181,60 +206,6 @@
 
         <Frames>
 
-            <!-- individual buttons for each link -->
-
-            <Button name="ScubaLootRow1" inherits="ScubaLootItemRowTemplate" id="1">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootMainItem">
-                        <Offset>
-                            <AbsDimension x="10" y="-24"/>
-                        </Offset>
-                    </Anchor>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow2" inherits="ScubaLootItemRowTemplate" id="2">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow1" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow3" inherits="ScubaLootItemRowTemplate" id="3">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow2" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow4" inherits="ScubaLootItemRowTemplate" id="4">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow3" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow5" inherits="ScubaLootItemRowTemplate" id="5">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow4" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow6" inherits="ScubaLootItemRowTemplate" id="6">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow5" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow7" inherits="ScubaLootItemRowTemplate" id="7">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow6" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow8" inherits="ScubaLootItemRowTemplate" id="8">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow7" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-            <Button name="ScubaLootRow9" inherits="ScubaLootItemRowTemplate" id="9">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRow8" relativePoint="BOTTOMLEFT"/>
-                </Anchors>
-            </Button>
-
-            <!-- scroll frame to contain the buttons above -->
-
             <CheckButton name="FinishedVotingCheckbox" hidden="false">
                 <Size>
                     <AbsDimension x="32" y="32"/>
@@ -261,7 +232,7 @@
                 </Layers>
                 <Scripts>
                     <OnClick>
-                        ScubaLoot_FinishedVoting()
+                            ScubaLoot_FinishedVoting()
                     </OnClick>
                 </Scripts>
                 <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
@@ -347,6 +318,742 @@
                     </OnLeave>
                 </Scripts>
             </Button>
+
+            <CheckButton name="ScubaLootRowCheckBox1" inherits="ScubaLootRowCheckBoxTemplate" id="1">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootFrame">
+                        <Offset>
+                            <AbsDimension x="10" y="-62"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox2" inherits="ScubaLootRowCheckBoxTemplate" id="2">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox1">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox3" inherits="ScubaLootRowCheckBoxTemplate" id="3">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox2">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox4" inherits="ScubaLootRowCheckBoxTemplate" id="4">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox3">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox5" inherits="ScubaLootRowCheckBoxTemplate" id="5">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox4">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox6" inherits="ScubaLootRowCheckBoxTemplate" id="6">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox5">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox7" inherits="ScubaLootRowCheckBoxTemplate" id="7">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox6">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox8" inherits="ScubaLootRowCheckBoxTemplate" id="8">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox7">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox9" inherits="ScubaLootRowCheckBoxTemplate" id="9">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox8">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox10" inherits="ScubaLootRowCheckBoxTemplate" id="10">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox9">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox11" inherits="ScubaLootRowCheckBoxTemplate" id="11">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox10">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox12" inherits="ScubaLootRowCheckBoxTemplate" id="12">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox11">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox13" inherits="ScubaLootRowCheckBoxTemplate" id="13">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox12">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox14" inherits="ScubaLootRowCheckBoxTemplate" id="14">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox13">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox15" inherits="ScubaLootRowCheckBoxTemplate" id="15">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox14">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox16" inherits="ScubaLootRowCheckBoxTemplate" id="16">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox15">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox17" inherits="ScubaLootRowCheckBoxTemplate" id="17">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox16">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox18" inherits="ScubaLootRowCheckBoxTemplate" id="18">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox17">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox19" inherits="ScubaLootRowCheckBoxTemplate" id="19">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox18">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox20" inherits="ScubaLootRowCheckBoxTemplate" id="20">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox19">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox21" inherits="ScubaLootRowCheckBoxTemplate" id="21">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox20">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox22" inherits="ScubaLootRowCheckBoxTemplate" id="22">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox21">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox23" inherits="ScubaLootRowCheckBoxTemplate" id="23">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox22">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox24" inherits="ScubaLootRowCheckBoxTemplate" id="24">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox23">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox25" inherits="ScubaLootRowCheckBoxTemplate" id="25">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox24">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox26" inherits="ScubaLootRowCheckBoxTemplate" id="26">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox25">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox27" inherits="ScubaLootRowCheckBoxTemplate" id="27">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox26">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox28" inherits="ScubaLootRowCheckBoxTemplate" id="28">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox27">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox29" inherits="ScubaLootRowCheckBoxTemplate" id="29">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox29">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox30" inherits="ScubaLootRowCheckBoxTemplate" id="30">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox29">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox31" inherits="ScubaLootRowCheckBoxTemplate" id="31">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox30">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox32" inherits="ScubaLootRowCheckBoxTemplate" id="32">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox31">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox33" inherits="ScubaLootRowCheckBoxTemplate" id="33">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox32">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox34" inherits="ScubaLootRowCheckBoxTemplate" id="34">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox33">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox35" inherits="ScubaLootRowCheckBoxTemplate" id="35">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox34">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox36" inherits="ScubaLootRowCheckBoxTemplate" id="36">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox35">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox37" inherits="ScubaLootRowCheckBoxTemplate" id="37">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox36">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox38" inherits="ScubaLootRowCheckBoxTemplate" id="38">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox37">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox39" inherits="ScubaLootRowCheckBoxTemplate" id="39">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox38">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+            <CheckButton name="ScubaLootRowCheckBox40" inherits="ScubaLootRowCheckBoxTemplate" id="40">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox39">
+                        <Offset>
+                            <AbsDimension x="0" y="-26"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </CheckButton>
+
+
+
+            <Button name="ScubaLootRow1" inherits="ScubaLootItemRowTemplate" id="1">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox1" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow2" inherits="ScubaLootItemRowTemplate" id="2">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox2" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow3" inherits="ScubaLootItemRowTemplate" id="3">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox3" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow4" inherits="ScubaLootItemRowTemplate" id="4">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox4" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow5" inherits="ScubaLootItemRowTemplate" id="5">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox5" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow6" inherits="ScubaLootItemRowTemplate" id="6">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox6" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow7" inherits="ScubaLootItemRowTemplate" id="7">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox7" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow8" inherits="ScubaLootItemRowTemplate" id="8">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox8" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow9" inherits="ScubaLootItemRowTemplate" id="9">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox9" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow10" inherits="ScubaLootItemRowTemplate" id="10">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox10" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow11" inherits="ScubaLootItemRowTemplate" id="11">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox11" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow12" inherits="ScubaLootItemRowTemplate" id="12">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox12" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow13" inherits="ScubaLootItemRowTemplate" id="13">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox13" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow14" inherits="ScubaLootItemRowTemplate" id="14">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox14" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow15" inherits="ScubaLootItemRowTemplate" id="15">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox15" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow16" inherits="ScubaLootItemRowTemplate" id="16">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox16" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow17" inherits="ScubaLootItemRowTemplate" id="17">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox17" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow18" inherits="ScubaLootItemRowTemplate" id="18">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox18" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow19" inherits="ScubaLootItemRowTemplate" id="19">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox19" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow20" inherits="ScubaLootItemRowTemplate" id="20">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox20" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow21" inherits="ScubaLootItemRowTemplate" id="21">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox21" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow22" inherits="ScubaLootItemRowTemplate" id="22">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox22" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow23" inherits="ScubaLootItemRowTemplate" id="23">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox23" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow24" inherits="ScubaLootItemRowTemplate" id="24">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox24" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow25" inherits="ScubaLootItemRowTemplate" id="25">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox25" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow26" inherits="ScubaLootItemRowTemplate" id="26">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox26" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow27" inherits="ScubaLootItemRowTemplate" id="27">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox27" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow28" inherits="ScubaLootItemRowTemplate" id="28">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox28" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow29" inherits="ScubaLootItemRowTemplate" id="29">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox29" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow30" inherits="ScubaLootItemRowTemplate" id="30">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox30" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow31" inherits="ScubaLootItemRowTemplate" id="31">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox31" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow32" inherits="ScubaLootItemRowTemplate" id="32">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox32" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow33" inherits="ScubaLootItemRowTemplate" id="33">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox33" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow34" inherits="ScubaLootItemRowTemplate" id="34">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox34" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow35" inherits="ScubaLootItemRowTemplate" id="35">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox35" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow36" inherits="ScubaLootItemRowTemplate" id="36">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox36" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow37" inherits="ScubaLootItemRowTemplate" id="37">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox37" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow38" inherits="ScubaLootItemRowTemplate" id="38">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox38" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow39" inherits="ScubaLootItemRowTemplate" id="39">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox39" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootRow40" inherits="ScubaLootItemRowTemplate" id="40">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox40" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="26" y="28"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+
+
+
+            <!--<Button name="TestButton" inherits="SLTestButtonTemplate" hidden="false">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootMainItem">
+                        <Offset>
+                            <AbsDimension x="10" y="-10" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>-->
 
             <Button name="ScubaLootClose" inherits="GameMenuButtonTemplate" text="X">
                 <Size>

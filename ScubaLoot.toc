@@ -2,6 +2,6 @@
 ## Title: ScubaLoot
 ## Version: 1.0
 ## Notes: Scuba cop loot council addon
-## Author: Kaymon, Zela
+## Author: Kaymon, Zela, Forest
 ScubaLoot.lua
 ScubaLoot.xml
