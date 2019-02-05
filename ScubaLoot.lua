@@ -9,8 +9,6 @@ ScubaLoot_SessionOpen = true
 ScubaLoot_QueuedItems = {} -- if multiple items are raid warning'd then they will go here
 ScubaLoot_ItemBeingDecided = ""
 
-ScubaLoot_RowsShown = 0
-
 ScubaLoot_Sort = {
     Names = {}, -- names of the people linking
     Links = {} -- items that they linked
@@ -75,7 +73,6 @@ end
 function ScubaLoot_AddToSort(arg1, arg2)
     local itemLinks = ScubaLoot_GetItemLinks(arg1)
     if(itemLinks) then
-        DEFAULT_CHAT_FRAME:AddMessage("Found Item Links")
         --if(ScubaLoot_HasValue(ScubaLoot_Sort.Names, arg2) == false) then
             table.insert(ScubaLoot_Sort.Names, arg2) -- add name
             table.insert(ScubaLoot_Sort.Links, arg1) -- add items
@@ -113,7 +110,7 @@ function ScubaLoot_OpenLootSession(arg1)
     -- if only one item is linked in rw then start a loot session
     -- do not start if arg1 contains "roll"
     local itemLinks = ScubaLoot_GetItemLinks(arg1)
-    if(itemLinks[1] and string.find(arg1, "roll") == nil) then
+    if(itemLinks[1] and string.find(strlower(arg1), "roll") == nil) then
         ScubaLoot_UpdateMainItem(itemLinks)
     elseif(itemLinks[1] and string.find(arg1, "roll") ~= nil) then
 
@@ -162,23 +159,23 @@ function ScubaLoot_GetPlayerRGB(playerName)
         if(name == playerName) then
             -- colors from : https://wow.gamepedia.com/Class_colors
             if(class == "Warrior") then
-                return 199, 156, 110
+                return 0.78, 0.61, 0.43
             elseif(class == "Rogue") then
-                return 255, 245, 105
+                return 1.00, 0.96, 0.41
             elseif(class == "Mage") then
-                return 64, 199, 235
+                return 0.25, 0.78, 0.92
             elseif(class == "Warlock") then
-                return 135, 135, 237
+                return 0.53, 0.53, 0.93
             elseif(class == "Hunter") then
-                return 171, 212, 115
+                return 0.67, 0.83, 0.45
             elseif(class == "Paladin") then
-                return 245, 140, 186
+                return 0.96, 0.55, 0.73
             elseif(class == "Druid") then
-                return 255, 125, 10
+                return 1.00, 0.49, 0.04
             elseif(class == "Priest") then
-                return 255, 255, 255
+                return 1.00, 1.00, 1.00
             elseif(class == "Shaman") then
-                return 0, 112, 222
+                return 0.00, 0.44, 0.87
             else
                 DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_GetPlayerRGB - Error could not find " .. playerName .. "'s class")
             end
@@ -209,34 +206,36 @@ function ScubaLoot_AddMainItemToGUI(itemLink)
 end
 
 function ScubaLoot_UpdateRows()
-    DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_UpdateRows")
     local list = ScubaLoot_Sort.Links
 
     if list then
         local r, g, b, found
         local texture, name, quality
-        local item, itemPlayer, itemName, itemIcon
-        for i = 1, 9 do
+        local item, itemPlayer, itemName, itemIcon, itemCheckBox
+        for i = 1, 40 do
             item = getglobal("ScubaLootRow"..i)
             itemPlayer = getglobal("ScubaLootRow"..i.."Player")
             itemName = getglobal("ScubaLootRow"..i.."Name")
             itemIcon = getglobal("ScubaLootRow"..i.."Icon")
+            itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
             if i <= table.getn(list) then
-                DEFAULT_CHAT_FRAME:AddMessage("table.getn(list): " .. table.getn(list))
                 name, texture, quality = ScubaLoot_GetNameByID(list[i])
                 itemIcon:SetTexture(texture)
                 itemName:SetText(name)
-                itemPlayer:SetText(ScubaLoot_Sort.Names[i])
+                itemPlayer:SetText(ScubaLoot_Sort.Names[i] .. ":")
                 r,g,b = ScubaLoot_GetPlayerRGB(ScubaLoot_Sort.Names[i])
                 itemPlayer:SetTextColor(r,g,b)
                 r,g,b = GetItemQualityColor(quality)
                 itemName:SetTextColor(r,g,b)
                 itemIcon:SetVertexColor(1,1,1)
                 item:Show()
+                itemCheckBox:Show()
             else
                 item:Hide()
+                itemCheckBox:Hide()
             end
         end
+        ScubaLootFrame:SetHeight(80 + ScubaLoot_GetTableLength(list) * 26)
     end
 end
 
@@ -246,6 +245,7 @@ function ScubaLoot_ShowTooltip()
     local idx = this:GetID()
     if ScubaLoot_Sort.Links[idx] then
         local name, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_Sort.Links[idx]))
+        GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_CURSOR")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
     end
@@ -255,10 +255,7 @@ function ScubaLoot_ShowMainItemToolTip()
     --DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_ShowMainItemToolTip")
     if ScubaLoot_ItemBeingDecided then
         local name, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_ItemBeingDecided))
-
-        --DEFAULT_CHAT_FRAME:AddMessage("link to id: " .. ScubaLoot_LinkToID(ScubaLoot_ItemBeingDecided))
-        --DEFAULT_CHAT_FRAME:AddMessage("getiteminfo link: " .. link)
-
+        GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_CURSOR")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
     end
@@ -276,11 +273,35 @@ function ScubaLoot_ToggleGUI()
     end
 end
 
+function ScubaLoot_RegisterVote(itemID)
+    local list = ScubaLoot_Sort.Names
+
+    local item = getglobal("ScubaLootRowCheckBox"..itemID)
+    if(item:GetChecked()) then
+        DEFAULT_CHAT_FRAME:AddMessage("Checked: " .. list[itemID])
+        -- uncheck all other checkboxs
+        for i = 1,40 do
+            item = getglobal("ScubaLootRowCheckBox"..i)
+            if(itemID ~= i and item:GetChecked()) then
+                item:SetChecked(false)
+            end
+        end
+    end
+end
+
 function ScubaLoot_FinishedVoting()
     local playerName = UnitName("player")
     if(FinishedVotingCheckbox:GetChecked()) then
         SendChatMessage(playerName .. " has finished voting", "RAID")
     end
+end
+
+function ScubaLoot_GetTableLength(tab)
+    local count = 0
+    for _, _ in tab do
+        count = count + 1
+    end
+    return count
 end
 
 --==========================================================================================================
