@@ -9,6 +9,8 @@ ScubaLoot_SessionOpen = true
 ScubaLoot_QueuedItems = {} -- if multiple items are raid warning'd then they will go here
 ScubaLoot_ItemBeingDecided = ""
 
+ScubaLoot_GUIMaximized = true
+
 ScubaLoot_Sort = {
     Names = {}, -- names of the people linking
     Links = {} -- items that they linked
@@ -238,7 +240,9 @@ function ScubaLoot_UpdateRows()
                             itemName2:SetTextColor(r,g,b)
                             itemIcon2:SetVertexColor(1,1,1)
 
-                            item2:Show()
+                            if(ScubaLoot_GUIMaximized) then
+                                item2:Show()
+                            end
                             ScubaLootFrame:SetWidth(450)
                         end
                     end
@@ -247,15 +251,19 @@ function ScubaLoot_UpdateRows()
                 r,g,b = ScubaLoot_GetPlayerRGB(ScubaLoot_Sort.Names[i])
                 itemPlayer:SetTextColor(r,g,b)
 
-                item1:Show()
-                itemCheckBox:Show()
+                if(ScubaLoot_GUIMaximized) then
+                    item1:Show()
+                    itemCheckBox:Show()
+                end
             else
                 item1:Hide()
                 item2:Hide()
                 itemCheckBox:Hide()
             end
         end
-        ScubaLootFrame:SetHeight(80 + ScubaLoot_GetTableLength(list) * 26)
+        if(ScubaLoot_GUIMaximized) then
+            ScubaLootFrame:SetHeight(80 + ScubaLoot_GetTableLength(list) * 26)
+        end
     end
 end
 
@@ -342,7 +350,8 @@ function ScubaLoot_ToggleGUISize()
     -- initial frame height is 80
     -- shouldn't hardcode 81 but w/e
     if(ScubaLootFrame:GetHeight() > 81) then -- minimize
-       -- hide all of the checkboxes and rows
+        ScubaLoot_GUIMaximized = false
+        -- hide all of the checkboxes and rows
         for i = 1, 40 do
             item1 = getglobal("ScubaLootRow"..i)
             item2 = getglobal("ScubaLootAdditionalItem"..i)
@@ -354,6 +363,7 @@ function ScubaLoot_ToggleGUISize()
         -- update the height
         ScubaLootFrame:SetHeight(80)
     else -- maximize
+        ScubaLoot_GUIMaximized = true
         -- show all of the checkboxes and rows
         local list = ScubaLoot_Sort.Links
         for i = 1, 40 do
