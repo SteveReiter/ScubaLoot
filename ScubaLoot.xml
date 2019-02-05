@@ -1068,7 +1068,7 @@
                 </Anchors>
                 <Scripts>
                     <OnClick>
-                            this:GetParent():Hide();
+                            ScubaLoot_ToggleGUISize()
                     </OnClick>
                 </Scripts>
             </Button>

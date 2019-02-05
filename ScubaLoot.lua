@@ -245,7 +245,7 @@ function ScubaLoot_ShowTooltip()
     local idx = this:GetID()
     if ScubaLoot_Sort.Links[idx] then
         local name, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_Sort.Links[idx]))
-        GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_CURSOR")
+        GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
     end
@@ -255,7 +255,7 @@ function ScubaLoot_ShowMainItemToolTip()
     --DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_ShowMainItemToolTip")
     if ScubaLoot_ItemBeingDecided then
         local name, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_ItemBeingDecided))
-        GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_CURSOR")
+        GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
     end
@@ -302,6 +302,37 @@ function ScubaLoot_GetTableLength(tab)
         count = count + 1
     end
     return count
+end
+
+function ScubaLoot_ToggleGUISize()
+    -- initial frame height is 80
+    -- shouldn't hardcode 81 but w/e
+    if(ScubaLootFrame:GetHeight() > 81) then -- minimize
+       -- hide all of the checkboxes and rows
+        local item, itemCheckBox
+        for i = 1, 40 do
+            item = getglobal("ScubaLootRow"..i)
+            itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
+            item:Hide()
+            itemCheckBox:Hide()
+        end
+        -- update the height
+        ScubaLootFrame:SetHeight(80)
+    else -- maximize
+        -- show all of the checkboxes and rows
+        local list = ScubaLoot_Sort.Names
+        local item, itemCheckBox
+        for i = 1, 40 do
+            item = getglobal("ScubaLootRow"..i)
+            itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
+            if i <= table.getn(list) then
+                item:Show()
+                itemCheckBox:Show()
+            end
+        end
+        -- update the height
+        ScubaLootFrame:SetHeight(80 + ScubaLoot_GetTableLength(list) * 26)
+    end
 end
 
 --==========================================================================================================
