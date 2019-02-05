@@ -21,59 +21,14 @@
         <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
     </CheckButton>
 
-    <!-- SLTestButtonTemplate -->
-    <!--<Button name="SLTestButtonTemplate" virtual="true">
-        <Size>
-            <AbsDimension x="210" y="24"/>
-        </Size>
-        <Layers>
-            <Layer level="ARTWORK">
-                <FontString name="$parentText" inherits="GameFontNormal" text="Finished">
-                    <Anchors>
-                        <Anchor point="LEFT" relativePoint="RIGHT">
-                            <Offset>
-                                <AbsDimension x="-1" y="0"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
-            </Layer>
-        </Layers>
-        <Scripts>
-            <OnClick>
-
-            </OnClick>
-        </Scripts>
-    </Button>-->
+    <!-- ScubaLootItemRowTemplate -->
 
     <Button name="ScubaLootItemRowTemplate" virtual="true" hidden="true">
         <Size>
-            <AbsDimension x="210" y="24"/>
+            <AbsDimension x="192" y="24"/>
         </Size>
         <Layers>
             <Layer level="ARTWORK">
-                <!--<CheckButton name="$parentCheckbox">
-                    <Size>
-                        <AbsDimension x="32" y="32"/>
-                    </Size>
-                    <Anchors>
-                        <Anchor point="TOPLEFT">
-                            <Offset>
-                                <AbsDimension x="4" y="0" />
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                    <Scripts>
-                        <OnClick>
-                                ScubaLoot_FinishedVoting()
-                        </OnClick>
-                    </Scripts>
-                    <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
-                    <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
-                    <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
-                    <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
-                    <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
-                </CheckButton>-->
                 <FontString name="$parentPlayer" font="GameFontHighlight" justifyH="LEFT">
                     <Size>
                         <AbsDimension x="50" y="22"/>
@@ -101,7 +56,7 @@
                 </Texture>
                 <FontString name="$parentName" font="GameFontHighlight" justifyH="LEFT">
                     <Size>
-                        <AbsDimension x="170" y="22"/>
+                        <AbsDimension x="120" y="22"/>
                     </Size>
                     <Anchors>
                         <Anchor point="LEFT" relativeTo="$parentIcon" relativePoint="RIGHT">
@@ -116,10 +71,10 @@
             <Layer level="BACKGROUND">
                 <Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestLogTitleHighlight" hidden="true" alphaMode="ADD">
                     <Size>
-                        <AbsDimension x="210" y="24"/>
+                        <AbsDimension x="130" y="24"/>
                     </Size>
                     <Anchors>
-                        <Anchor point="TOPLEFT"/>
+                        <Anchor point="TOPLEFT" relativeTo="$parentIcon"/>
                     </Anchors>
                 </Texture>
             </Layer>
@@ -127,7 +82,66 @@
         <Scripts>
             <OnEnter>
                     getglobal(this:GetName().."Highlight"):Show()
-                    ScubaLoot_ShowTooltip()
+                    ScubaLoot_ShowTooltip(this:GetID())
+            </OnEnter>
+            <OnLeave>
+                    if not this.lockedHighlight then
+                        getglobal(this:GetName().."Highlight"):Hide()
+                    end
+                    GameTooltip:Hide()
+            </OnLeave>
+        </Scripts>
+    </Button>
+
+    <!-- ScubaLootAdditionalItemTemplate -->
+
+    <Button name="ScubaLootAdditionalItemTemplate" virtual="true" hidden="true">
+        <Size>
+            <AbsDimension x="142" y="24"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="$parentIcon">
+                    <Size>
+                        <AbsDimension x="22" y="22"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="LEFT">
+                            <Offset>
+                                <AbsDimension x="0" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <FontString name="$parentName" font="GameFontHighlight" justifyH="LEFT">
+                    <Size>
+                        <AbsDimension x="120" y="22"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="LEFT" relativeTo="$parentIcon" relativePoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="4" y="0"/>
+                            </Offset>
+                        </Anchor>
+                        <Anchor point="RIGHT"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestLogTitleHighlight" hidden="true" alphaMode="ADD">
+                    <Size>
+                        <AbsDimension x="130" y="24"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentIcon"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnEnter>
+                    getglobal(this:GetName().."Highlight"):Show()
+                    ScubaLoot_ShowAlternateTooltip(this:GetID())
             </OnEnter>
             <OnLeave>
                     if not this.lockedHighlight then
@@ -206,6 +220,9 @@
 
         <Frames>
 
+
+            <!-- FinishedVotingCheckbox - checkbox to designated that you are done voting -->
+
             <CheckButton name="FinishedVotingCheckbox" hidden="false">
                 <Size>
                     <AbsDimension x="32" y="32"/>
@@ -241,6 +258,8 @@
                 <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
                 <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
             </CheckButton>
+
+            <!-- ScubaLootMainItem - item that is being voted on -->
 
             <Button name="ScubaLootMainItem" hidden="true">
                 <Size>
@@ -318,6 +337,8 @@
                     </OnLeave>
                 </Scripts>
             </Button>
+
+            <!-- ScubaLootRowCheckBoxX - checkbox for each row -->
 
             <CheckButton name="ScubaLootRowCheckBox1" inherits="ScubaLootRowCheckBoxTemplate" id="1">
                 <Anchors>
@@ -680,7 +701,7 @@
                 </Anchors>
             </CheckButton>
 
-
+            <!-- ScubaLootRowX - main row for the links -->
 
             <Button name="ScubaLootRow1" inherits="ScubaLootItemRowTemplate" id="1">
                 <Anchors>
@@ -1043,17 +1064,368 @@
                 </Anchors>
             </Button>
 
-
-
-            <!--<Button name="TestButton" inherits="SLTestButtonTemplate" hidden="false">
+            <Button name="ScubaLootAdditionalItem1" inherits="ScubaLootAdditionalItemTemplate" id="1">
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootMainItem">
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow1" relativePoint="RIGHT">
                         <Offset>
-                            <AbsDimension x="10" y="-10" />
+                            <AbsDimension x="3" y="-1"/>
                         </Offset>
                     </Anchor>
                 </Anchors>
-            </Button>-->
+            </Button>
+            <Button name="ScubaLootAdditionalItem2" inherits="ScubaLootAdditionalItemTemplate" id="2">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow2" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem3" inherits="ScubaLootAdditionalItemTemplate" id="3">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow3" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem4" inherits="ScubaLootAdditionalItemTemplate" id="4">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow4" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem5" inherits="ScubaLootAdditionalItemTemplate" id="5">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow5" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem6" inherits="ScubaLootAdditionalItemTemplate" id="6">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow6" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem7" inherits="ScubaLootAdditionalItemTemplate" id="7">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow7" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem8" inherits="ScubaLootAdditionalItemTemplate" id="8">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow8" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem9" inherits="ScubaLootAdditionalItemTemplate" id="9">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow9" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem10" inherits="ScubaLootAdditionalItemTemplate" id="10">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow10" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem11" inherits="ScubaLootAdditionalItemTemplate" id="11">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow11" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem12" inherits="ScubaLootAdditionalItemTemplate" id="12">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow12" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem13" inherits="ScubaLootAdditionalItemTemplate" id="13">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow13" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem14" inherits="ScubaLootAdditionalItemTemplate" id="14">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow14" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem15" inherits="ScubaLootAdditionalItemTemplate" id="15">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow15" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem16" inherits="ScubaLootAdditionalItemTemplate" id="16">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow16" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem17" inherits="ScubaLootAdditionalItemTemplate" id="17">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow17" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem18" inherits="ScubaLootAdditionalItemTemplate" id="18">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow18" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem19" inherits="ScubaLootAdditionalItemTemplate" id="19">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow19" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem20" inherits="ScubaLootAdditionalItemTemplate" id="20">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow20" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem21" inherits="ScubaLootAdditionalItemTemplate" id="21">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow21" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem22" inherits="ScubaLootAdditionalItemTemplate" id="22">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow22" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem23" inherits="ScubaLootAdditionalItemTemplate" id="23">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow23" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem24" inherits="ScubaLootAdditionalItemTemplate" id="24">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow24" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem25" inherits="ScubaLootAdditionalItemTemplate" id="25">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow25" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem26" inherits="ScubaLootAdditionalItemTemplate" id="26">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow26" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem27" inherits="ScubaLootAdditionalItemTemplate" id="27">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow27" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem28" inherits="ScubaLootAdditionalItemTemplate" id="28">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow28" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem29" inherits="ScubaLootAdditionalItemTemplate" id="29">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow29" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem30" inherits="ScubaLootAdditionalItemTemplate" id="30">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow30" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem31" inherits="ScubaLootAdditionalItemTemplate" id="31">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow31" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem32" inherits="ScubaLootAdditionalItemTemplate" id="32">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow32" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem33" inherits="ScubaLootAdditionalItemTemplate" id="33">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow33" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem34" inherits="ScubaLootAdditionalItemTemplate" id="34">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow34" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem35" inherits="ScubaLootAdditionalItemTemplate" id="35">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow35" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem36" inherits="ScubaLootAdditionalItemTemplate" id="36">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow36" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem37" inherits="ScubaLootAdditionalItemTemplate" id="37">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow37" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem38" inherits="ScubaLootAdditionalItemTemplate" id="38">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow38" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem39" inherits="ScubaLootAdditionalItemTemplate" id="39">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow39" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="ScubaLootAdditionalItem40" inherits="ScubaLootAdditionalItemTemplate" id="40">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="ScubaLootRow40" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+
+            <!-- ScubaLootClose - button to toggle the minimize/maximize of the gui -->
 
             <Button name="ScubaLootClose" inherits="GameMenuButtonTemplate" text="X">
                 <Size>

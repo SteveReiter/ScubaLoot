@@ -75,7 +75,7 @@ function ScubaLoot_AddToSort(arg1, arg2)
     if(itemLinks) then
         --if(ScubaLoot_HasValue(ScubaLoot_Sort.Names, arg2) == false) then
             table.insert(ScubaLoot_Sort.Names, arg2) -- add name
-            table.insert(ScubaLoot_Sort.Links, arg1) -- add items
+            table.insert(ScubaLoot_Sort.Links, itemLinks) -- add items
         --else
         --    for k, v in pairs(ScubaLoot_Sort.Names) do
         --        if(v == arg2) then
@@ -120,7 +120,6 @@ end
 -- itemLinks
 --    one or more linked items in a table
 function ScubaLoot_UpdateMainItem(itemLinks)
-    DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_UpdateMainItem")
     ScubaLoot_QueuedItems = itemLinks
     if(ScubaLoot_QueuedItems[1]) then
         local nextItem = table.remove(ScubaLoot_QueuedItems, 1)
@@ -211,27 +210,48 @@ function ScubaLoot_UpdateRows()
     if list then
         local r, g, b, found
         local texture, name, quality
-        local item, itemPlayer, itemName, itemIcon, itemCheckBox
+        local item1, itemPlayer, itemName1, itemIcon1, item2, itemName2, itemIcon2, itemCheckBox
         for i = 1, 40 do
-            item = getglobal("ScubaLootRow"..i)
+            item1 = getglobal("ScubaLootRow"..i)
             itemPlayer = getglobal("ScubaLootRow"..i.."Player")
-            itemName = getglobal("ScubaLootRow"..i.."Name")
-            itemIcon = getglobal("ScubaLootRow"..i.."Icon")
+            itemName1 = getglobal("ScubaLootRow"..i.."Name")
+            itemIcon1 = getglobal("ScubaLootRow"..i.."Icon")
+            item2 = getglobal("ScubaLootAdditionalItem"..i)
+            itemName2 = getglobal("ScubaLootAdditionalItem"..i.."Name")
+            itemIcon2 = getglobal("ScubaLootAdditionalItem"..i.."Icon")
             itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
             if i <= table.getn(list) then
-                name, texture, quality = ScubaLoot_GetNameByID(list[i])
-                itemIcon:SetTexture(texture)
-                itemName:SetText(name)
+                for j = 1, 2 do
+                    if(j <= table.getn(list[i])) then
+                        if(j == 1) then
+                            name, texture, quality = ScubaLoot_GetNameByID(list[i][j])
+                            itemIcon1:SetTexture(texture)
+                            itemName1:SetText(name)
+                            r,g,b = GetItemQualityColor(quality)
+                            itemName1:SetTextColor(r,g,b)
+                            itemIcon1:SetVertexColor(1,1,1)
+                        else
+                            name, texture, quality = ScubaLoot_GetNameByID(list[i][j])
+                            itemIcon2:SetTexture(texture)
+                            itemName2:SetText(name)
+                            r,g,b = GetItemQualityColor(quality)
+                            itemName2:SetTextColor(r,g,b)
+                            itemIcon2:SetVertexColor(1,1,1)
+
+                            item2:Show()
+                            ScubaLootFrame:SetWidth(450)
+                        end
+                    end
+                end
                 itemPlayer:SetText(ScubaLoot_Sort.Names[i] .. ":")
                 r,g,b = ScubaLoot_GetPlayerRGB(ScubaLoot_Sort.Names[i])
                 itemPlayer:SetTextColor(r,g,b)
-                r,g,b = GetItemQualityColor(quality)
-                itemName:SetTextColor(r,g,b)
-                itemIcon:SetVertexColor(1,1,1)
-                item:Show()
+
+                item1:Show()
                 itemCheckBox:Show()
             else
-                item:Hide()
+                item1:Hide()
+                item2:Hide()
                 itemCheckBox:Hide()
             end
         end
@@ -240,11 +260,22 @@ function ScubaLoot_UpdateRows()
 end
 
 -- shows tooltip for items in the sort list
-function ScubaLoot_ShowTooltip()
-    --DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_ShowTooltip")
-    local idx = this:GetID()
-    if ScubaLoot_Sort.Links[idx] then
-        local name, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_Sort.Links[idx]))
+function ScubaLoot_ShowTooltip(id)
+    local list = ScubaLoot_Sort.Links[id]
+
+    if list then
+        local name, link = GetItemInfo(ScubaLoot_LinkToID(list[1]))
+        GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
+        GameTooltip:SetHyperlink(link)
+        GameTooltip:Show()
+    end
+end
+
+function ScubaLoot_ShowAlternateTooltip(id)
+    local list = ScubaLoot_Sort.Links[id]
+
+    if list then
+        local name, link = GetItemInfo(ScubaLoot_LinkToID(list[2]))
         GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
@@ -305,29 +336,36 @@ function ScubaLoot_GetTableLength(tab)
 end
 
 function ScubaLoot_ToggleGUISize()
+
+    local item1, item2, itemCheckBox
+
     -- initial frame height is 80
     -- shouldn't hardcode 81 but w/e
     if(ScubaLootFrame:GetHeight() > 81) then -- minimize
        -- hide all of the checkboxes and rows
-        local item, itemCheckBox
         for i = 1, 40 do
-            item = getglobal("ScubaLootRow"..i)
+            item1 = getglobal("ScubaLootRow"..i)
+            item2 = getglobal("ScubaLootAdditionalItem"..i)
             itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
-            item:Hide()
+            item1:Hide()
+            item2:Hide()
             itemCheckBox:Hide()
         end
         -- update the height
         ScubaLootFrame:SetHeight(80)
     else -- maximize
         -- show all of the checkboxes and rows
-        local list = ScubaLoot_Sort.Names
-        local item, itemCheckBox
+        local list = ScubaLoot_Sort.Links
         for i = 1, 40 do
-            item = getglobal("ScubaLootRow"..i)
+            item1 = getglobal("ScubaLootRow"..i)
+            item2 = getglobal("ScubaLootAdditionalItem"..i)
             itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
             if i <= table.getn(list) then
-                item:Show()
+                item1:Show()
                 itemCheckBox:Show()
+                if table.getn(list[i]) == 2 then
+                    item2:Show()
+                end
             end
         end
         -- update the height
