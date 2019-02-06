@@ -97,7 +97,7 @@
 
     <Button name="ScubaLootAdditionalItemTemplate" virtual="true" hidden="true">
         <Size>
-            <AbsDimension x="142" y="24"/>
+            <AbsDimension x="120" y="24"/>
         </Size>
         <Layers>
             <Layer level="ARTWORK">
@@ -115,7 +115,7 @@
                 </Texture>
                 <FontString name="$parentName" font="GameFontHighlight" justifyH="LEFT">
                     <Size>
-                        <AbsDimension x="120" y="22"/>
+                        <AbsDimension x="100" y="22"/>
                     </Size>
                     <Anchors>
                         <Anchor point="LEFT" relativeTo="$parentIcon" relativePoint="RIGHT">
@@ -130,7 +130,7 @@
             <Layer level="BACKGROUND">
                 <Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestLogTitleHighlight" hidden="true" alphaMode="ADD">
                     <Size>
-                        <AbsDimension x="130" y="24"/>
+                        <AbsDimension x="120" y="24"/>
                     </Size>
                     <Anchors>
                         <Anchor point="TOPLEFT" relativeTo="$parentIcon"/>
@@ -1425,6 +1425,1709 @@
                 </Anchors>
             </Button>
 
+            <Button name="ScubaLootLinkNote1" hidden="true" id="1">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow1" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote2" hidden="true" id="2">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow2" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote3" hidden="true" id="3">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow3" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote4" hidden="true" id="4">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow4" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote5" hidden="true" id="5">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow6" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote6" hidden="true" id="6">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow6" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote7" hidden="true" id="7">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow7" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote8" hidden="true" id="8">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow8" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote9" hidden="true" id="9">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow9" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote10" hidden="true" id="10">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow10" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote11" hidden="true" id="11">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow11" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote12" hidden="true" id="12">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow12" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote13" hidden="true" id="13">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow13" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote14" hidden="true" id="14">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow14" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote15" hidden="true" id="15">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow15" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote16" hidden="true" id="16">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow16" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote17" hidden="true" id="17">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow17" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote18" hidden="true" id="18">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow18" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote19" hidden="true" id="19">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow19" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote20" hidden="true" id="20">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow20" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote21" hidden="true" id="21">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow21" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote22" hidden="true" id="22">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow22" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote23" hidden="true" id="23">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow23" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote24" hidden="true" id="24">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow24" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote25" hidden="true" id="25">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow25" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote26" hidden="true" id="26">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow26" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote27" hidden="true" id="27">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow27" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote28" hidden="true" id="28">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow28" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote29" hidden="true" id="29">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow29" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote30" hidden="true" id="30">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow30" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote31" hidden="true" id="31">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow31" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote32" hidden="true" id="32">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow32" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote33" hidden="true" id="33">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow33" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote34" hidden="true" id="34">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow34" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote35" hidden="true" id="35">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow35" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote36" hidden="true" id="36">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow36" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote37" hidden="true" id="37">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow37" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote38" hidden="true" id="38">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow38" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote39" hidden="true" id="39">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow39" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootLinkNote40" hidden="true" id="40">
+                <Size>
+                    <AbsDimension x="65" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="LEFT" text="">
+                            <Size>
+                                <AbsDimension x="65" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeTo="ScubaLootRow40" relativePoint="RIGHT">
+                                    <Offset>
+                                        <AbsDimension x="2" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+
+            <Button name="ScubaLootVoteCount1" hidden="true" id="1">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootFrame">
+                                    <Offset>
+                                        <AbsDimension x="-16" y="-68"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount2" hidden="true" id="2">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount1Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount3" hidden="true" id="3">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount2Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount4" hidden="true" id="4">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount3Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount5" hidden="true" id="5">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount4Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount6" hidden="true" id="6">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount5Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount7" hidden="true" id="7">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount6Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount8" hidden="true" id="8">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount7Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount9" hidden="true" id="9">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount8Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount10" hidden="true" id="10">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount9Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount11" hidden="true" id="11">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount10Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount12" hidden="true" id="12">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount11Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount13" hidden="true" id="13">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount12Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount14" hidden="true" id="14">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount13Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount15" hidden="true" id="15">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount14Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount16" hidden="true" id="16">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount15Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount17" hidden="true" id="17">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount16Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount18" hidden="true" id="18">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount17Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount19" hidden="true" id="19">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount18Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount20" hidden="true" id="20">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount19Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount21" hidden="true" id="21">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount20Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount22" hidden="true" id="22">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount21Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount23" hidden="true" id="23">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount22Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount24" hidden="true" id="24">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount23Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount25" hidden="true" id="25">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount24Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount26" hidden="true" id="26">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount25Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount27" hidden="true" id="27">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount26Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount28" hidden="true" id="28">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount27Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount29" hidden="true" id="29">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount27Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount29" hidden="true" id="29">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount28Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount30" hidden="true" id="30">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount29Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount31" hidden="true" id="31">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount30Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount32" hidden="true" id="32">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount31Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount33" hidden="true" id="33">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount32Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount34" hidden="true" id="34">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount33Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount35" hidden="true" id="35">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount34Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount36" hidden="true" id="36">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount35Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount37" hidden="true" id="37">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount36Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount38" hidden="true" id="38">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount37Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount39" hidden="true" id="39">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount38Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+            <Button name="ScubaLootVoteCount40" hidden="true" id="40">
+                <Size>
+                    <AbsDimension x="30" y="24"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="0">
+                            <Size>
+                                <AbsDimension x="30" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootVoteCount39Text">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-26"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Button>
+
             <!-- ScubaLootClose - button to toggle the minimize/maximize of the gui -->
 
             <Button name="ScubaLootClose" inherits="GameMenuButtonTemplate" text="X">
@@ -1443,6 +3146,28 @@
                             ScubaLoot_ToggleGUISize()
                     </OnClick>
                 </Scripts>
+            </Button>
+
+            <Button name="ScubaLootVoteHeader" hidden="false">
+                <Size>
+                    <AbsDimension x="50" y="30"/>
+                </Size>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="$parentText" font="GameFontHighlight" justifyH="RIGHT" text="Votes:">
+                            <Size>
+                                <AbsDimension x="50" y="22"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="ScubaLootFrame">
+                                    <Offset>
+                                        <AbsDimension x="-16" y="-50"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
             </Button>
 
             <!---->

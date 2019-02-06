@@ -20,7 +20,24 @@ SlashCmdList["SLASH_SCUBALOOT"] = function() end
 
 SLASH_SCUBALOOT1 = "/sl"
 function SlashCmdList.SCUBALOOT(args)
-    ScubaLoot_ToggleGUI()
+    if(string.find(args, " ")) then
+        args = split(args, " ")
+    end
+
+    if(type(args) == "string") then
+        args = {args} -- need it to be a table, even if just one value
+    end
+
+    if(ScubaLoot_HasValue(args, "test")) then
+        ScubaLoot_Test()
+    else
+        ScubaLoot_ToggleGUI()
+    end
+end
+
+function ScubaLoot_Test()
+    DEFAULT_CHAT_FRAME:AddMessage(ScubaLootLinkNote1:IsShown())
+    DEFAULT_CHAT_FRAME:AddMessage(ScubaLootLinkNote1:IsVisible())
 end
 
 function ScubaLoot_OnLoad()
@@ -40,7 +57,7 @@ function ScubaLoot_Init()
     ScubaLoot_ItemBeingDecided = ""
     ScubaLoot_QueuedItems = {}
 
-    ScubaLoot_RowsShown = 0
+    ScubaLoot_GUIMaximized = true
 end
 
 --==========================================================================================================
@@ -100,6 +117,9 @@ function ScubaLoot_GetItemLinks(arg1)
         added = true
     end
     if(added) then
+        -- also need any additional text
+        arg1 = string.gsub(arg1, "|.-]|h", "") -- removes the links from the msg
+        items[3] = arg1 -- index 3 could possibly be another item link so index it directly
         return items
     else
         return nil
@@ -212,7 +232,10 @@ function ScubaLoot_UpdateRows()
     if list then
         local r, g, b, found
         local texture, name, quality
-        local item1, itemPlayer, itemName1, itemIcon1, item2, itemName2, itemIcon2, itemCheckBox
+        local itemCheckBox, itemPlayer
+        local item1, itemName1, itemIcon1
+        local item2, itemName2, itemIcon2
+        local note, noteText, vote
         for i = 1, 40 do
             item1 = getglobal("ScubaLootRow"..i)
             itemPlayer = getglobal("ScubaLootRow"..i.."Player")
@@ -222,47 +245,62 @@ function ScubaLoot_UpdateRows()
             itemName2 = getglobal("ScubaLootAdditionalItem"..i.."Name")
             itemIcon2 = getglobal("ScubaLootAdditionalItem"..i.."Icon")
             itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
+            note = getglobal("ScubaLootLinkNote"..i)
+            noteText = getglobal("ScubaLootLinkNote"..i.."Text")
+            vote = getglobal("ScubaLootVoteCount"..i)
             if i <= table.getn(list) then
-                for j = 1, 2 do
-                    if(j <= table.getn(list[i])) then
-                        if(j == 1) then
-                            name, texture, quality = ScubaLoot_GetNameByID(list[i][j])
-                            itemIcon1:SetTexture(texture)
-                            itemName1:SetText(name)
-                            r,g,b = GetItemQualityColor(quality)
-                            itemName1:SetTextColor(r,g,b)
-                            itemIcon1:SetVertexColor(1,1,1)
-                        else
-                            name, texture, quality = ScubaLoot_GetNameByID(list[i][j])
-                            itemIcon2:SetTexture(texture)
-                            itemName2:SetText(name)
-                            r,g,b = GetItemQualityColor(quality)
-                            itemName2:SetTextColor(r,g,b)
-                            itemIcon2:SetVertexColor(1,1,1)
+                name, texture, quality = ScubaLoot_GetNameByID(list[i][1])
+                itemIcon1:SetTexture(texture)
+                itemName1:SetText(name)
+                r,g,b = GetItemQualityColor(quality)
+                itemName1:SetTextColor(r,g,b)
+                itemIcon1:SetVertexColor(1,1,1)
+                if(table.getn(list[i]) >= 2) then -- multiple links
+                    name, texture, quality = ScubaLoot_GetNameByID(list[i][2])
+                    itemIcon2:SetTexture(texture)
+                    itemName2:SetText(name)
+                    r,g,b = GetItemQualityColor(quality)
+                    itemName2:SetTextColor(r,g,b)
+                    itemIcon2:SetVertexColor(1,1,1)
 
-                            if(ScubaLoot_GUIMaximized) then
-                                item2:Show()
-                            end
-                            ScubaLootFrame:SetWidth(450)
-                        end
+                    if(ScubaLoot_GUIMaximized) then
+                        item2:Show()
                     end
+                    noteText:ClearAllPoints()
+                    noteText:SetPoint("LEFT", item2, "RIGHT", 2, 0)
+                else
+                    noteText:ClearAllPoints()
+                    noteText:SetPoint("LEFT", item1, "RIGHT", 2, -1)
                 end
                 itemPlayer:SetText(ScubaLoot_Sort.Names[i] .. ":")
                 r,g,b = ScubaLoot_GetPlayerRGB(ScubaLoot_Sort.Names[i])
                 itemPlayer:SetTextColor(r,g,b)
+                noteText:SetText(list[i][3])
 
                 if(ScubaLoot_GUIMaximized) then
                     item1:Show()
                     itemCheckBox:Show()
+                    note:Show()
+                    vote:Show()
                 end
             else
                 item1:Hide()
                 item2:Hide()
                 itemCheckBox:Hide()
+                note:Hide()
+                vote:Hide()
             end
         end
-        if(ScubaLoot_GUIMaximized) then
+        if(ScubaLoot_GUIMaximized) then -- update height and width
             ScubaLootFrame:SetHeight(80 + ScubaLoot_GetTableLength(list) * 26)
+            local newWidth = 330
+            for _, tab in ScubaLoot_Sort.Links do
+                if table.getn(tab) >= 2 then
+                    newWidth = 452
+                    break
+                end
+            end
+            ScubaLootFrame:SetWidth(newWidth)
         end
     end
 end
@@ -345,35 +383,43 @@ end
 
 function ScubaLoot_ToggleGUISize()
 
-    local item1, item2, itemCheckBox
+    local item1, item2, itemCheckBox, note, vote
 
     -- initial frame height is 80
     -- shouldn't hardcode 81 but w/e
     if(ScubaLootFrame:GetHeight() > 81) then -- minimize
         ScubaLoot_GUIMaximized = false
-        -- hide all of the checkboxes and rows
+        -- hide all of the checkboxes and rows etc
         for i = 1, 40 do
             item1 = getglobal("ScubaLootRow"..i)
             item2 = getglobal("ScubaLootAdditionalItem"..i)
             itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
+            note = getglobal("ScubaLootLinkNote"..i)
+            vote = getglobal("ScubaLootVoteCount"..i)
             item1:Hide()
             item2:Hide()
             itemCheckBox:Hide()
+            note:Hide()
+            vote:Hide()
         end
         -- update the height
         ScubaLootFrame:SetHeight(80)
     else -- maximize
         ScubaLoot_GUIMaximized = true
-        -- show all of the checkboxes and rows
+        -- show all of the checkboxes and rows etc
         local list = ScubaLoot_Sort.Links
         for i = 1, 40 do
             item1 = getglobal("ScubaLootRow"..i)
             item2 = getglobal("ScubaLootAdditionalItem"..i)
             itemCheckBox = getglobal("ScubaLootRowCheckBox"..i)
+            note = getglobal("ScubaLootLinkNote"..i)
+            vote = getglobal("ScubaLootVoteCount"..i)
             if i <= table.getn(list) then
                 item1:Show()
                 itemCheckBox:Show()
-                if table.getn(list[i]) == 2 then
+                note:Show()
+                vote:Show()
+                if table.getn(list[i]) >= 2 then
                     item2:Show()
                 end
             end
