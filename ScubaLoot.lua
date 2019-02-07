@@ -441,6 +441,8 @@ function ScubaLoot_GetItemWinner()
             for _, index in highestIndexes do
                 tempString = tempString + ScubaLoot_Sort.Names[index] + ", "
             end
+        else
+            tempString = ScubaLoot_Sort.Names[highestIndexes[1]]
         end
         return tempString
     end
