@@ -197,9 +197,10 @@ function ScubaLoot_OpenLootSession(arg1)
     ScubaLoot_FillOfficerList()
 
     -- if item is linked in rw then start a loot session
-    -- do not start if arg1 contains "roll" or "wins"
+    -- do not start if arg1 contains "roll" or "wins" or "tied"
     local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
-    if(string.find(strlower(arg1), "wins") == nil and itemLinks[1] and string.find(strlower(arg1), "roll") == nil) then
+    if(string.find(strlower(arg1), "wins") == nil and string.find(strlower(arg1), "tied") == nil
+            and itemLinks[1] and string.find(strlower(arg1), "roll") == nil) then
         ScubaLoot_SessionOpen = true
         ScubaLoot_UpdateMainItemQueue(itemLinks)
         ScubaLoot_MoveToNextMainItem()
@@ -259,7 +260,12 @@ function ScubaLoot_MoveToNextMainItem()
 end
 
 function ScubaLoot_AnnounceWinner()
-    SendChatMessage(ScubaLoot_GetItemWinner() .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+    local winnerName = ScubaLoot_GetItemWinner()
+    if(string.find(winnerName, ",") ~= nil) then -- tied
+        SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+    else
+        SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+    end
     if(ScubaLoot_QueuedItems[1]) then -- more items in queue
         ScubaLoot_MoveToNextMainItem()
     else
@@ -431,8 +437,10 @@ function ScubaLoot_GetItemWinner()
         return "Nobody"
     else
         local tempString = ""
-        for _, index in highestIndexes do
-            tempString = tempString + ScubaLoot_Sort.Names[index] + ", "
+        if(table.getn(highestIndexes) > 1) then
+            for _, index in highestIndexes do
+                tempString = tempString + ScubaLoot_Sort.Names[index] + ", "
+            end
         end
         return tempString
     end
