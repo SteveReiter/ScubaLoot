@@ -2,15 +2,20 @@
 
 -- Init functions and globals
 
+-- IMPORTANT - these variables are guild specific, change them to work for yours
+-- *ALL* users of the addon (officers etc) will need to change these variables
 officerRank1 = "Rear Admiral"
 officerRank2 = "Salty Dog"
 officerRank3 = "ExtraRank"
+ScubaLoot_FinishedVotingThreshold = 1 -- equal or greater will reward the item
+-- IMPORTANT - these variables are guild specific, change them to work for yours
 
 ScubaLootTitle = "CLC"
 ScubaLootVersion = "1.0"
 
-ScubaLoot_SessionOpen = true
+ScubaLoot_SessionOpen = false
 ScubaLoot_QueuedItems = {} -- if multiple items are raid warning'd then they will go here
+ScubaLoot_ItemBeingDecided = ""
 
 ScubaLoot_GUIMaximized = true
 
@@ -34,15 +39,39 @@ function SlashCmdList.SCUBALOOT(args)
         args = {args} -- need it to be a table, even if just one value
     end
 
-    if(ScubaLoot_HasValue(args, "test")) then
+    if(ScubaLoot_HasValue(args, "showqueue")) then
         ScubaLoot_Test()
-    else
+    elseif(ScubaLoot_HasValue(args, "toggle")) then
         ScubaLoot_ToggleGUI()
+    elseif(ScubaLoot_HasValue(args, "showofficers")) then
+        ScubaLoot_ShowOfficers()
+    elseif(ScubaLoot_HasValue(args, "showvotes")) then
+        ScubaLoot_ShowVotes()
+    end
+end
+
+function ScubaLoot_ShowQueue()
+    DEFAULT_CHAT_FRAME:AddMessage("Current item: " .. ScubaLoot_ItemBeingDecided)
+    DEFAULT_CHAT_FRAME:AddMessage("Queued items:")
+    ScubaLoot_tprint(ScubaLoot_QueuedItems)
+end
+
+function ScubaLoot_ShowOfficers()
+    DEFAULT_CHAT_FRAME:AddMessage("Officers:")
+    for name, _ in ScubaLoot_OfficerList do
+        DEFAULT_CHAT_FRAME:AddMessage(name)
+    end
+end
+
+function ScubaLoot_ShowVotes()
+    DEFAULT_CHAT_FRAME:AddMessage("Votes:")
+    for voter, votee in ScubaLoot_OfficerList do
+        DEFAULT_CHAT_FRAME:AddMessage(voter .. ": " .. votee)
     end
 end
 
 function ScubaLoot_Test()
-    ScubaLoot_tprint(ScubaLoot_OfficerList)
+
 end
 
 function ScubaLoot_OnLoad()
@@ -58,7 +87,7 @@ function ScubaLoot_Init()
     ScubaLoot_Sort.Names = {}
     ScubaLoot_Sort.Links = {}
 
-    --ScubaLoot_SessionOpen = false
+    ScubaLoot_SessionOpen = false
     ScubaLoot_ItemBeingDecided = ""
     ScubaLoot_QueuedItems = {}
 
@@ -115,6 +144,30 @@ function ScubaLoot_AddToSort(arg1, arg2)
         end
         ScubaLoot_UpdateRows()
     end
+    -- not the best place to put this but w/e
+    -- need to move to the next main item for everybody that isnt the raid leader
+    if(string.find(arg1, "Skipping:") ~= nil) then
+        if(IsPartyLeader() == false) then
+            ScubaLoot_MoveToNextMainItem()
+        end
+    end
+end
+
+-- arg1
+--    chat message
+function ScubaLoot_GetMainItemLinks(arg1)
+    local items = {}
+    local added = false
+    -- matches one or more items similar to |Hitem:6948:0:0:0:0:0:0:0|h[Hearthstone]|h
+    for item in string.gmatch(arg1, "|.-]|h") do
+        table.insert(items, item)
+        added = true
+    end
+    if(added) then
+        return items
+    else
+        return nil
+    end
 end
 
 -- arg1
@@ -141,16 +194,39 @@ end
 --    chat message
 function ScubaLoot_OpenLootSession(arg1)
     -- if item is linked in rw then start a loot session
-    -- do not start if arg1 contains "roll"
-    local itemLinks = ScubaLoot_GetItemLinks(arg1)
-    if(itemLinks[1] and string.find(strlower(arg1), "roll") == nil) then
-        ScubaLoot_UpdateMainItem(itemLinks)
+    -- do not start if arg1 contains "roll" or "wins"
+    local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
+    if(string.find(strlower(arg1), "wins") == nil and itemLinks[1] and string.find(strlower(arg1), "roll") == nil) then
+        ScubaLoot_SessionOpen = true
+        ScubaLoot_UpdateMainItemQueue(itemLinks)
+        ScubaLoot_MoveToNextMainItem()
+        ScubaLoot_GUIMaximized = true
+        ScubaLootFrame:Show()
     end
+end
+
+function ScubaLoot_CloseLootSession()
+    ScubaLoot_SessionOpen = false
+    ScubaLoot_Sort.Names = {}
+    ScubaLoot_Sort.Links = {}
+    for _, linkerName in ScubaLoot_OfficerList do
+        linkerName = ""
+    end
+    ScubaLoot_ItemBeingDecided = ""
+    ScubaLoot_QueuedItems = {}
+    ScubaLoot_FinishedVotingCount = 0
+
+    -- update the gui
+    ScubaLoot_UpdateRows()
+    local mainItem = getglobal("ScubaLootMainItem")
+    mainItem:Hide()
+    local finishedCheckbox = getglobal("FinishedVotingCheckbox")
+    finishedCheckbox:SetChecked(false)
 end
 
 -- itemLinks
 --    one or more linked items in a table
-function ScubaLoot_UpdateMainItem(itemLinks)
+function ScubaLoot_UpdateMainItemQueue(itemLinks)
     for _, link in itemLinks do
         if(link ~= nil) then
             -- make sure the link is a link bc itemLinks also contains the note text in index 3
@@ -159,11 +235,48 @@ function ScubaLoot_UpdateMainItem(itemLinks)
             end
         end
     end
-    if(ScubaLoot_QueuedItems[1]) then
-        local nextItem = table.remove(ScubaLoot_QueuedItems, 1)
-        ScubaLoot_AddMainItemToGUI(nextItem)
-        ScubaLoot_ItemBeingDecided = nextItem
+end
+
+function ScubaLoot_MoveToNextMainItem()
+    local nextItem = table.remove(ScubaLoot_QueuedItems, 1)
+    ScubaLoot_AddMainItemToGUI(nextItem)
+    ScubaLoot_ItemBeingDecided = nextItem
+    if(IsPartyLeader()) then
         SendChatMessage("Link for " .. ScubaLoot_LinkToName(nextItem), "RAID")
+    end
+    -- reset the rows
+    ScubaLoot_Sort.Names = {}
+    ScubaLoot_Sort.Links = {}
+    ScubaLoot_UpdateRows()
+    -- uncheck ppls finished checkbox
+    ScubaLoot_FinishedVotingCount = 0
+    local finishedCheckbox = getglobal("FinishedVotingCheckbox")
+    finishedCheckbox:SetChecked(false)
+end
+
+function ScubaLoot_AnnounceWinner()
+    SendChatMessage(ScubaLoot_GetItemWinner() .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+    if(ScubaLoot_QueuedItems[1]) then -- more items in queue
+        ScubaLoot_MoveToNextMainItem()
+    else
+        ScubaLoot_CloseLootSession()
+    end
+end
+
+function ScubaLoot_SkipMainItem()
+    if(IsPartyLeader()) then
+        if(ScubaLoot_SessionOpen) then
+            SendChatMessage("Skipping: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID")
+            if(ScubaLoot_QueuedItems[1]) then -- more items in queue
+                ScubaLoot_MoveToNextMainItem()
+            else
+                ScubaLoot_CloseLootSession()
+            end
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("Nothing to skip")
+        end
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("Must be the party leader to skip")
     end
 end
 
@@ -183,6 +296,9 @@ function ScubaLoot_HandleOfficerMessage(arg1, arg2)
             ScubaLoot_UpdateVoteCounts()
         elseif(string.find(arg1, "has finished voting")) then
             ScubaLoot_FinishedVotingCount = ScubaLoot_FinishedVotingCount + 1
+            if(ScubaLoot_FinishedVotingCount >= ScubaLoot_FinishedVotingThreshold) then
+                ScubaLoot_AnnounceWinner()
+            end
         elseif(string.find(arg1, "has not finished voting")) then
             ScubaLoot_FinishedVotingCount = ScubaLoot_FinishedVotingCount - 1
         end
@@ -190,7 +306,6 @@ function ScubaLoot_HandleOfficerMessage(arg1, arg2)
 end
 
 function ScubaLoot_UpdateVoteCounts()
-    DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_UpdateVoteCounts")
     local tempVoteTable = {}
     for officerName, linkerName in ScubaLoot_OfficerList do
         local playerIndex
@@ -304,11 +419,11 @@ function ScubaLoot_GetItemWinner()
             highestIndex = i
         end
     end
-    return ScubaLoot_Sort.Names[highestIndex]
-end
-
-function ScubaLoot_AnnounceWinner()
-    SendChatMessage(GetItemWinner() .. " wins: " .. ScubaLoot_OfficerList, "RAID_WARNING")
+    if(highest == 0) then
+        return "Nobody"
+    else
+        return ScubaLoot_Sort.Names[highestIndex]
+    end
 end
 
 function ScubaLoot_tprint(tbl, indent)
@@ -450,7 +565,7 @@ function ScubaLoot_ShowAlternateTooltip(id)
 end
 
 function ScubaLoot_ShowMainItemToolTip()
-    if ScubaLoot_ItemBeingDecided then
+    if ScubaLoot_ItemBeingDecided ~= nil and ScubaLoot_ItemBeingDecided ~= "" then
         local _, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_ItemBeingDecided))
         GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetHyperlink(link)

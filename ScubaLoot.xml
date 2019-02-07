@@ -157,7 +157,7 @@
     <Frame name="ScubaLootFrame" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true">
         <TitleRegion setAllPoints="true"/>
         <Size>
-            <AbsDimension x="325" y="80" />
+            <AbsDimension x="330" y="80" />
         </Size>
         <Anchors>
             <Anchor point="CENTER" />
@@ -3168,6 +3168,24 @@
                         </FontString>
                     </Layer>
                 </Layers>
+            </Button>
+
+            <Button name="ScubaLootSkipItem" inherits="GameMenuButtonTemplate" text="Skip">
+                <Size>
+                    <AbsDimension x="50" y="26"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOP" relativeTo="ScubaLootFrame">
+                        <Offset>
+                            <AbsDimension x="0" y="-20" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                            ScubaLoot_SkipMainItem()
+                    </OnClick>
+                </Scripts>
             </Button>
 
             <!---->
