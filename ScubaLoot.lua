@@ -2,14 +2,20 @@
 
 -- Init functions and globals
 
+officerRank1 = "Rear Admiral"
+officerRank2 = "Salty Dog"
+officerRank3 = "ExtraRank"
+
 ScubaLootTitle = "CLC"
 ScubaLootVersion = "1.0"
 
 ScubaLoot_SessionOpen = true
 ScubaLoot_QueuedItems = {} -- if multiple items are raid warning'd then they will go here
-ScubaLoot_ItemBeingDecided = ""
+c = ""
 
 ScubaLoot_GUIMaximized = true
+
+ScubaLoot_OfficerList = {}
 
 ScubaLoot_Sort = {
     Names = {}, -- names of the people linking
@@ -36,8 +42,7 @@ function SlashCmdList.SCUBALOOT(args)
 end
 
 function ScubaLoot_Test()
-    DEFAULT_CHAT_FRAME:AddMessage(ScubaLootLinkNote1:IsShown())
-    DEFAULT_CHAT_FRAME:AddMessage(ScubaLootLinkNote1:IsVisible())
+    ScubaLoot_tprint(ScubaLoot_OfficerList)
 end
 
 function ScubaLoot_OnLoad()
@@ -58,6 +63,9 @@ function ScubaLoot_Init()
     ScubaLoot_QueuedItems = {}
 
     ScubaLoot_GUIMaximized = true
+
+    -- call some functions
+    ScubaLoot_FillOfficerList()
 end
 
 --==========================================================================================================
@@ -79,6 +87,7 @@ function ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
     elseif(event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER") then
         if(ScubaLoot_SessionOpen) then
             ScubaLoot_AddToSort(arg1, arg2)
+            ScubaLoot_HandleOfficerMessage(arg1, arg2) -- todo remove this later
         end
     elseif(event == "CHAT_MSG_RAID_WARNING") then
         ScubaLoot_HandleOfficerMessage(arg1, arg2)
@@ -92,16 +101,16 @@ end
 function ScubaLoot_AddToSort(arg1, arg2)
     local itemLinks = ScubaLoot_GetItemLinks(arg1)
     if(itemLinks) then
-        --if(ScubaLoot_HasValue(ScubaLoot_Sort.Names, arg2) == false) then
+        if(ScubaLoot_HasValue(ScubaLoot_Sort.Names, arg2) == false) then
             table.insert(ScubaLoot_Sort.Names, arg2) -- add name
             table.insert(ScubaLoot_Sort.Links, itemLinks) -- add items
-        --else
-        --    for k, v in pairs(ScubaLoot_Sort.Names) do
-        --        if(v == arg2) then
-        --            ScubaLoot_Sort.Links[k] = arg1
-        --        end
-        --    end
-        --end
+        else
+            for k, v in pairs(ScubaLoot_Sort.Names) do
+                if(v == arg2) then
+                    ScubaLoot_Sort.Links[k] = itemLinks
+                end
+            end
+        end
         ScubaLoot_UpdateRows()
     end
 end
@@ -129,20 +138,20 @@ end
 -- arg1
 --    chat message
 function ScubaLoot_OpenLootSession(arg1)
-    -- if only one item is linked in rw then start a loot session
+    -- if item is linked in rw then start a loot session
     -- do not start if arg1 contains "roll"
     local itemLinks = ScubaLoot_GetItemLinks(arg1)
     if(itemLinks[1] and string.find(strlower(arg1), "roll") == nil) then
         ScubaLoot_UpdateMainItem(itemLinks)
-    elseif(itemLinks[1] and string.find(arg1, "roll") ~= nil) then
-
     end
 end
 
 -- itemLinks
 --    one or more linked items in a table
 function ScubaLoot_UpdateMainItem(itemLinks)
-    ScubaLoot_QueuedItems = itemLinks
+    for _, link in itemLinks do
+        table.insert(ScubaLoot_QueuedItems, link)
+    end
     if(ScubaLoot_QueuedItems[1]) then
         local nextItem = table.remove(ScubaLoot_QueuedItems, 1)
         ScubaLoot_AddMainItemToGUI(nextItem)
@@ -151,8 +160,54 @@ function ScubaLoot_UpdateMainItem(itemLinks)
     end
 end
 
-function ScubaLoot_HandleOfficerMessage()
+-- arg1
+--    chat message
+-- arg2
+--    author
+function ScubaLoot_HandleOfficerMessage(arg1, arg2)
+    if(ScubaLoot_OfficerList[arg2]) then
+        if(string.find(arg1, "I voted for") ~= nil) then
+            arg1 = string.gsub(arg1, "I voted for ", "")
+            ScubaLoot_OfficerList[arg2] = arg1
+            ScubaLoot_UpdateVoteCounts()
+        elseif(string.find(arg1, "I unvoted for") ~= nil) then
+            arg1 = string.gsub(arg1, "I unvoted for ", "")
+            ScubaLoot_OfficerList[arg2] = ""
+            ScubaLoot_UpdateVoteCounts()
+        end
+    end
+end
 
+function ScubaLoot_UpdateVoteCounts()
+    DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_UpdateVoteCounts")
+    local tempVoteTable = {}
+    for officerName, linkerName in ScubaLoot_OfficerList do
+        local playerIndex
+        for i = 1, table.getn(ScubaLoot_Sort.Names) do
+            if(ScubaLoot_Sort.Names[i] == linkerName) then
+                playerIndex = i
+                break
+            end
+        end
+        if(playerIndex) then
+            if(tempVoteTable[playerIndex]) then
+                tempVoteTable[playerIndex] = tempVoteTable[playerIndex] + 1
+            else
+                tempVoteTable[playerIndex] = 1
+            end
+        end
+    end
+    for index, count in tempVoteTable do
+        local voteText = getglobal("ScubaLootVoteCount"..index.."Text")
+        voteText:SetText(count)
+    end
+    -- set all others to 0 if not in tempVoteTable
+    for i = 1, table.getn(ScubaLoot_Sort.Names) do
+        if(tempVoteTable[i] == nil) then
+            local voteText = getglobal("ScubaLootVoteCount"..i.."Text")
+            voteText:SetText("0")
+        end
+    end
 end
 
 function ScubaLoot_GetNameByID(itemLink)
@@ -204,6 +259,61 @@ function ScubaLoot_GetPlayerRGB(playerName)
     end
 end
 
+function ScubaLoot_FillOfficerList()
+    -- loop through the entire guild roster
+    -- numTotalMembers, numOnlineMembers
+    local numTotalMembers, _ = GetNumGuildMembers()
+    for i = 1, numTotalMembers do
+        local name, rank, _, _, _, zone, _, _, online, _, _, _, _, _ = GetGuildRosterInfo(i)
+        if(online ~= nil) then
+            if(rank == officerRank1 or rank == officerRank2 or rank == officerRank3) then
+                ScubaLoot_OfficerList[name] = "" -- empty string signifies has not voted
+            end
+        end
+    end
+
+    -- add ppl testing the addon, non officers of course
+    -- todo remove later
+    ScubaLoot_OfficerList["Kaymon"] = ""
+    ScubaLoot_OfficerList["Kaymage"] = ""
+    ScubaLoot_OfficerList["Forest"] = ""
+    ScubaLoot_OfficerList["Forestbank"] = ""
+    ScubaLoot_OfficerList["Zela"] = ""
+    ScubaLoot_OfficerList["Ztaps"] = ""
+end
+
+function ScubaLoot_GetItemWinner()
+    local voteText
+    local highest = 0
+    local highestIndex = 0
+    for i= 1, 40 do
+        voteText = getglobal("ScubaLootVoteCount"..i.."Text")
+        if(tonumber(voteText:GetText()) > highest) then
+            highest = tonumber(voteText:GetText())
+            highestIndex = i
+        end
+    end
+    return ScubaLoot_Sort.Names[highestIndex]
+end
+
+function ScubaLoot_AnnounceWinner()
+    SendChatMessage(GetItemWinner() .. " wins: " .. ScubaLoot_OfficerList, "RAID")
+end
+
+function ScubaLoot_tprint(tbl, indent)
+    if not indent then indent = 0 end
+    for k, v in pairs(tbl) do
+        local formatting = string.rep("  ", indent) .. k .. ": "
+        if type(v) == "table" then
+            DEFAULT_CHAT_FRAME:AddMessage(formatting)
+            tprint(v, indent+1)
+        elseif type(v) == 'boolean' then
+            DEFAULT_CHAT_FRAME:AddMessage(formatting .. tostring(v))
+        else
+            DEFAULT_CHAT_FRAME:AddMessage(formatting .. v)
+        end
+    end
+end
 
 --==========================================================================================================
 
@@ -310,7 +420,7 @@ function ScubaLoot_ShowTooltip(id)
     local list = ScubaLoot_Sort.Links[id]
 
     if list then
-        local name, link = GetItemInfo(ScubaLoot_LinkToID(list[1]))
+        local _, link = GetItemInfo(ScubaLoot_LinkToID(list[1]))
         GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
@@ -321,7 +431,7 @@ function ScubaLoot_ShowAlternateTooltip(id)
     local list = ScubaLoot_Sort.Links[id]
 
     if list then
-        local name, link = GetItemInfo(ScubaLoot_LinkToID(list[2]))
+        local _, link = GetItemInfo(ScubaLoot_LinkToID(list[2]))
         GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
@@ -329,9 +439,8 @@ function ScubaLoot_ShowAlternateTooltip(id)
 end
 
 function ScubaLoot_ShowMainItemToolTip()
-    --DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot_ShowMainItemToolTip")
     if ScubaLoot_ItemBeingDecided then
-        local name, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_ItemBeingDecided))
+        local _, link = GetItemInfo(ScubaLoot_LinkToID(ScubaLoot_ItemBeingDecided))
         GameTooltip:SetOwner(ScubaLootFrame, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetHyperlink(link)
         GameTooltip:Show()
@@ -355,7 +464,7 @@ function ScubaLoot_RegisterVote(itemID)
 
     local item = getglobal("ScubaLootRowCheckBox"..itemID)
     if(item:GetChecked()) then
-        DEFAULT_CHAT_FRAME:AddMessage("Checked: " .. list[itemID])
+        SendChatMessage("I voted for " .. list[itemID], "RAID")
         -- uncheck all other checkboxs
         for i = 1,40 do
             item = getglobal("ScubaLootRowCheckBox"..i)
@@ -363,6 +472,8 @@ function ScubaLoot_RegisterVote(itemID)
                 item:SetChecked(false)
             end
         end
+    else
+        SendChatMessage("I unvoted for " .. list[itemID], "RAID")
     end
 end
 
@@ -370,6 +481,8 @@ function ScubaLoot_FinishedVoting()
     local playerName = UnitName("player")
     if(FinishedVotingCheckbox:GetChecked()) then
         SendChatMessage(playerName .. " has finished voting", "RAID")
+    else
+        SendChatMessage(playerName .. " has not finished voting", "RAID")
     end
 end
 
@@ -444,6 +557,7 @@ string.match = string.match or function(str, pattern)
     end
 end
 
+-- credit Sol
 select = select or function(idx, ...)
     local len = table.getn(arg)
 
@@ -460,6 +574,30 @@ select = select or function(idx, ...)
     end
 end
 
+-- credit Sol
+string.split = string.split or function(delim, s, limit)
+    local split_string = {}
+    local rest = {}
+
+    local i = 1
+    for str in string.gfind(s, '([^' .. delim .. ']+)' .. delim .. '?') do
+        if limit and i >= limit then
+            table.insert(rest, str)
+        else
+            table.insert(split_string, str)
+        end
+
+        i = i + 1
+    end
+
+    if limit then
+        table.insert(split_string, string.join(delim, unpack(rest)))
+    end
+
+    return unpack(split_string)
+end
+
+-- credit Sol
 string.gmatch = string.gmatch or function(str, pattern)
     local init = 0
 
@@ -480,7 +618,11 @@ string.gmatch = string.gmatch or function(str, pattern)
         end
     end
 end
---
+
+-- credit Sol
+string.trim = string.trim or function(str)
+    return string.gsub(str, '^%s*(.-)%s*$', '%1')
+end
 
 function ScubaLoot_HasValue(tab, val)
     for _, value in tab do
@@ -489,19 +631,4 @@ function ScubaLoot_HasValue(tab, val)
         end
     end
     return false
-end
-
-function ScubaLoot_tprint(tbl, indent)
-    if not indent then indent = 0 end
-    for k, v in pairs(tbl) do
-        local formatting = string.rep("  ", indent) .. k .. ": "
-        if type(v) == "table" then
-            DEFAULT_CHAT_FRAME:AddMessage(formatting)
-            tprint(v, indent+1)
-        elseif type(v) == 'boolean' then
-            DEFAULT_CHAT_FRAME:AddMessage(formatting .. tostring(v))
-        else
-            DEFAULT_CHAT_FRAME:AddMessage(formatting .. v)
-        end
-    end
 end
