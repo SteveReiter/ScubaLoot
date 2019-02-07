@@ -119,7 +119,6 @@ function ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
         if(ScubaLoot_SessionOpen) then
             ScubaLoot_AddToSort(arg1, arg2)
             ScubaLoot_HandleRaidMessage(arg1, arg2)
-            ScubaLoot_HandleOfficerMessage(arg1, arg2) -- todo remove this later
         end
     elseif(event == "CHAT_MSG_OFFICER") then
         ScubaLoot_HandleOfficerMessage(arg1, arg2)
@@ -203,6 +202,12 @@ function ScubaLoot_OpenLootSession(arg1)
         ScubaLoot_MoveToNextMainItem()
         ScubaLoot_GUIMaximized = true
         ScubaLootFrame:Show()
+    elseif(string.find(strlower(arg1), "wins:") ~= nil) then
+        if(ScubaLoot_QueuedItems[1]) then -- more items in queue
+            ScubaLoot_MoveToNextMainItem()
+        else
+            ScubaLoot_CloseLootSession()
+        end
     end
 end
 
@@ -262,11 +267,6 @@ function ScubaLoot_AnnounceWinner()
         SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
     else
         SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
-    end
-    if(ScubaLoot_QueuedItems[1]) then -- more items in queue
-        ScubaLoot_MoveToNextMainItem()
-    else
-        ScubaLoot_CloseLootSession()
     end
 end
 
@@ -418,16 +418,6 @@ function ScubaLoot_FillOfficerList()
             end
         end
     end
-
-    -- add ppl testing the addon, non officers of course
-    -- todo remove later
-    ScubaLoot_OfficerList["Kaymon"] = ""
-    ScubaLoot_OfficerList["Kaymage"] = ""
-    ScubaLoot_OfficerList["Forest"] = ""
-    ScubaLoot_OfficerList["Forestbank"] = ""
-    ScubaLoot_OfficerList["Zela"] = ""
-    ScubaLoot_OfficerList["Ztaps"] = ""
-    ScubaLoot_OfficerList["Dino"] = ""
 end
 
 function ScubaLoot_GetItemWinner()
@@ -626,7 +616,7 @@ function ScubaLoot_RegisterVote(itemID)
 
     local item = getglobal("ScubaLootRowCheckBox"..itemID)
     if(item:GetChecked()) then
-        SendChatMessage("I voted for " .. list[itemID], "RAID")
+        SendChatMessage("I voted for " .. list[itemID], "OFFICER")
         -- uncheck all other checkboxs
         for i = 1,40 do
             item = getglobal("ScubaLootRowCheckBox"..i)
@@ -635,16 +625,16 @@ function ScubaLoot_RegisterVote(itemID)
             end
         end
     else
-        SendChatMessage("I unvoted for " .. list[itemID], "RAID")
+        SendChatMessage("I unvoted for " .. list[itemID], "OFFICER")
     end
 end
 
 function ScubaLoot_FinishedVoting()
     local playerName = UnitName("player")
     if(FinishedVotingCheckbox:GetChecked()) then
-        SendChatMessage(playerName .. " has finished voting", "RAID")
+        SendChatMessage(playerName .. " has finished voting", "OFFICER")
     else
-        SendChatMessage(playerName .. " has not finished voting", "RAID")
+        SendChatMessage(playerName .. " has not finished voting", "OFFICER")
     end
 end
 
