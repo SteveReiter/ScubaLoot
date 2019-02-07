@@ -7,7 +7,7 @@
 officerRank1 = "Rear Admiral" -- Scuba Cops guild leader rank name
 officerRank2 = "Salty Dog" -- Scuba Cops officer rank name
 officerRank3 = "ExtraRank" -- free rank name, we dont have a third
-ScubaLoot_FinishedVotingThreshold = 1 -- equal or greater will reward the item
+ScubaLoot_FinishedVotingThreshold = 2 -- equal or greater will reward the item
 -- IMPORTANT - these variables are guild specific, change them to work for yours
 
 ScubaLootTitle = "CLC"
@@ -411,6 +411,7 @@ function ScubaLoot_FillOfficerList()
     ScubaLoot_OfficerList["Forestbank"] = ""
     ScubaLoot_OfficerList["Zela"] = ""
     ScubaLoot_OfficerList["Ztaps"] = ""
+    ScubaLoot_OfficerList["Dino"] = ""
 end
 
 function ScubaLoot_GetItemWinner()
