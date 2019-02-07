@@ -1,4 +1,4 @@
-###**ScubaLoot - Scuba Cops Approved Loot Council Addon**<br/>
+# **ScubaLoot - Scuba Cops Approved Loot Council Addon**<br/>
 
 ![alt text](https://i.imgur.com/qCzm91p.png)
 
