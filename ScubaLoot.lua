@@ -118,6 +118,7 @@ function ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
     elseif(event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER") then
         if(ScubaLoot_SessionOpen) then
             ScubaLoot_AddToSort(arg1, arg2)
+            ScubaLoot_HandleRaidMessage(arg1, arg2)
             ScubaLoot_HandleOfficerMessage(arg1, arg2) -- todo remove this later
         end
     elseif(event == "CHAT_MSG_OFFICER") then
@@ -143,13 +144,6 @@ function ScubaLoot_AddToSort(arg1, arg2)
             end
         end
         ScubaLoot_UpdateRows()
-    end
-    -- not the best place to put this but w/e
-    -- need to move to the next main item for everybody that isnt the raid leader
-    if(string.find(arg1, "Skipping:") ~= nil) then
-        if(IsPartyLeader() == false) then
-            ScubaLoot_MoveToNextMainItem()
-        end
     end
 end
 
@@ -195,6 +189,9 @@ end
 function ScubaLoot_OpenLootSession(arg1)
     -- refill the officer list everytime incase somebody went offline etc
     ScubaLoot_FillOfficerList()
+
+    -- also need to hide non needed widgets for non officers
+    ScubaLoot_HideUnnecessaryWidgets()
 
     -- if item is linked in rw then start a loot session
     -- do not start if arg1 contains "roll" or "wins" or "tied"
@@ -311,6 +308,19 @@ function ScubaLoot_HandleOfficerMessage(arg1, arg2)
             end
         elseif(string.find(arg1, "has not finished voting")) then
             ScubaLoot_FinishedVotingCount = ScubaLoot_FinishedVotingCount - 1
+        end
+    end
+end
+
+-- arg1
+--    chat message
+-- arg2
+--    author
+function ScubaLoot_HandleRaidMessage(arg1, arg2)
+    -- need to move to the next main item for everybody that isnt the raid leader
+    if(string.find(arg1, "Skipping:") ~= nil) then
+        if(IsPartyLeader() == false) then
+            ScubaLoot_MoveToNextMainItem()
         end
     end
 end
@@ -535,11 +545,15 @@ function ScubaLoot_UpdateRows()
                 itemPlayer:SetTextColor(r,g,b)
                 noteText:SetText(list[i][3])
 
+                -- todo: reoffset/relation/etc widgets for non officers
+
                 if(ScubaLoot_GUIMaximized) then
                     item1:Show()
-                    itemCheckBox:Show()
                     note:Show()
-                    vote:Show()
+                    if(ScubaLoot_OfficerList[UnitName("player")] ~= nil) then -- is an officer
+                        itemCheckBox:Show()
+                        vote:Show()
+                    end
                 end
             else
                 item1:Hide()
@@ -687,6 +701,19 @@ function ScubaLoot_ToggleGUISize()
         end
         -- update the height
         ScubaLootFrame:SetHeight(80 + ScubaLoot_GetTableLength(list) * 26)
+    end
+end
+
+function ScubaLoot_HideUnnecessaryWidgets()
+    if(ScubaLoot_OfficerList[UnitName("player")] == nil) then -- not an officer
+        -- hide the finished voting button
+        FinishedVotingCheckbox:Hide()
+        -- hide the skip button
+        ScubaLootSkipItem:Hide()
+        -- hide anything voting related
+        ScubaLootVoteHeader:Hide()
+
+        -- the vote checkbox and vote count are handled in ScubaLoot_UpdateRows()
     end
 end
 
