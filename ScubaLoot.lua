@@ -4,9 +4,9 @@
 
 -- IMPORTANT - these variables are guild specific, change them to work for yours
 -- *ALL* users of the addon (officers etc) will need to change these variables
-officerRank1 = "Rear Admiral"
-officerRank2 = "Salty Dog"
-officerRank3 = "ExtraRank"
+officerRank1 = "Rear Admiral" -- Scuba Cops guild leader rank name
+officerRank2 = "Salty Dog" -- Scuba Cops officer rank name
+officerRank3 = "ExtraRank" -- free rank name, we dont have a third
 ScubaLoot_FinishedVotingThreshold = 1 -- equal or greater will reward the item
 -- IMPORTANT - these variables are guild specific, change them to work for yours
 
@@ -193,6 +193,9 @@ end
 -- arg1
 --    chat message
 function ScubaLoot_OpenLootSession(arg1)
+    -- refill the officer list everytime incase somebody went offline etc
+    ScubaLoot_FillOfficerList()
+
     -- if item is linked in rw then start a loot session
     -- do not start if arg1 contains "roll" or "wins"
     local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
@@ -222,6 +225,7 @@ function ScubaLoot_CloseLootSession()
     mainItem:Hide()
     local finishedCheckbox = getglobal("FinishedVotingCheckbox")
     finishedCheckbox:SetChecked(false)
+    ScubaLootFrame:Hide()
 end
 
 -- itemLinks
@@ -388,6 +392,7 @@ end
 function ScubaLoot_FillOfficerList()
     -- loop through the entire guild roster
     -- numTotalMembers, numOnlineMembers
+    ScubaLoot_OfficerList = {}
     local numTotalMembers, _ = GetNumGuildMembers()
     for i = 1, numTotalMembers do
         local name, rank, _, _, _, zone, _, _, online, _, _, _, _, _ = GetGuildRosterInfo(i)
