@@ -11,11 +11,11 @@ ScubaLootVersion = "1.0"
 
 ScubaLoot_SessionOpen = true
 ScubaLoot_QueuedItems = {} -- if multiple items are raid warning'd then they will go here
-c = ""
 
 ScubaLoot_GUIMaximized = true
 
 ScubaLoot_OfficerList = {}
+ScubaLoot_FinishedVotingCount = 0
 
 ScubaLoot_Sort = {
     Names = {}, -- names of the people linking
@@ -64,6 +64,8 @@ function ScubaLoot_Init()
 
     ScubaLoot_GUIMaximized = true
 
+    ScubaLoot_FinishedVotingCount = 0
+
     -- call some functions
     ScubaLoot_FillOfficerList()
 end
@@ -89,7 +91,7 @@ function ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
             ScubaLoot_AddToSort(arg1, arg2)
             ScubaLoot_HandleOfficerMessage(arg1, arg2) -- todo remove this later
         end
-    elseif(event == "CHAT_MSG_RAID_WARNING") then
+    elseif(event == "CHAT_MSG_OFFICER") then
         ScubaLoot_HandleOfficerMessage(arg1, arg2)
     end
 end
@@ -150,7 +152,12 @@ end
 --    one or more linked items in a table
 function ScubaLoot_UpdateMainItem(itemLinks)
     for _, link in itemLinks do
-        table.insert(ScubaLoot_QueuedItems, link)
+        if(link ~= nil) then
+            -- make sure the link is a link bc itemLinks also contains the note text in index 3
+            if(string.find(link, "|.-]|h") ~= nil) then
+                table.insert(ScubaLoot_QueuedItems, link)
+            end
+        end
     end
     if(ScubaLoot_QueuedItems[1]) then
         local nextItem = table.remove(ScubaLoot_QueuedItems, 1)
@@ -174,6 +181,10 @@ function ScubaLoot_HandleOfficerMessage(arg1, arg2)
             arg1 = string.gsub(arg1, "I unvoted for ", "")
             ScubaLoot_OfficerList[arg2] = ""
             ScubaLoot_UpdateVoteCounts()
+        elseif(string.find(arg1, "has finished voting")) then
+            ScubaLoot_FinishedVotingCount = ScubaLoot_FinishedVotingCount + 1
+        elseif(string.find(arg1, "has not finished voting")) then
+            ScubaLoot_FinishedVotingCount = ScubaLoot_FinishedVotingCount - 1
         end
     end
 end
@@ -297,7 +308,7 @@ function ScubaLoot_GetItemWinner()
 end
 
 function ScubaLoot_AnnounceWinner()
-    SendChatMessage(GetItemWinner() .. " wins: " .. ScubaLoot_OfficerList, "RAID")
+    SendChatMessage(GetItemWinner() .. " wins: " .. ScubaLoot_OfficerList, "RAID_WARNING")
 end
 
 function ScubaLoot_tprint(tbl, indent)
