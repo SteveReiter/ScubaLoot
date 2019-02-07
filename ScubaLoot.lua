@@ -417,18 +417,24 @@ end
 function ScubaLoot_GetItemWinner()
     local voteText
     local highest = 0
-    local highestIndex = 0
+    local highestIndexes = {}
     for i= 1, 40 do
         voteText = getglobal("ScubaLootVoteCount"..i.."Text")
         if(tonumber(voteText:GetText()) > highest) then
             highest = tonumber(voteText:GetText())
-            highestIndex = i
+            highestIndexes = {i}
+        elseif(tonumber(voteText:GetText()) == highest) then
+            table.insert(highestIndexes, i)
         end
     end
     if(highest == 0) then
         return "Nobody"
     else
-        return ScubaLoot_Sort.Names[highestIndex]
+        local tempString = ""
+        for _, index in highestIndexes do
+            tempString = tempString + ScubaLoot_Sort.Names[index] + ", "
+        end
+        return tempString
     end
 end
 
