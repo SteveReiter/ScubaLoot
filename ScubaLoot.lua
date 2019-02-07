@@ -208,6 +208,12 @@ function ScubaLoot_OpenLootSession(arg1)
         else
             ScubaLoot_CloseLootSession()
         end
+        -- clear vote count text in the gui
+        local voteText
+        for i = 1, 40 do
+            voteText = getglobal("ScubaLootVoteCount"..i.."Text")
+            voteText:SetText("0")
+        end
     end
 end
 
