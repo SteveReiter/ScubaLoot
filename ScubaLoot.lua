@@ -196,11 +196,15 @@ function ScubaLoot_OpenLootSession(arg1)
     -- only start if arg1 contains one or more itemlinks and the word "link"
     local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
     if(itemLinks[1]and string.find(strlower(arg1), "link") ~= nil) then
-        ScubaLoot_SessionOpen = true
-        ScubaLoot_UpdateMainItemQueue(itemLinks)
-        ScubaLoot_MoveToNextMainItem()
-        ScubaLoot_GUIMaximized = true
-        ScubaLootFrame:Show()
+        if(ScubaLoot_SessionOpen) then -- just needs to add more items to the queue
+            ScubaLoot_UpdateMainItemQueue(itemLinks)
+        else
+            ScubaLoot_SessionOpen = true
+            ScubaLoot_UpdateMainItemQueue(itemLinks)
+            ScubaLoot_MoveToNextMainItem()
+            ScubaLoot_GUIMaximized = true
+            ScubaLootFrame:Show()
+        end
     elseif(string.find(strlower(arg1), "wins:") ~= nil or string.find(strlower(arg1), "tied for")) then
         -- this will update everybody elses GUI when an item is rewarded
         if(ScubaLoot_QueuedItems[1]) then -- more items in queue
