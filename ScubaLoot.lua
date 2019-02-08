@@ -39,6 +39,10 @@ function SlashCmdList.SCUBALOOT(args)
         args = {args} -- need it to be a table, even if just one value
     end
 
+    for i = 1, table.getn(args) do
+        args[i] = strlower(args[i])
+    end
+
     if(ScubaLoot_HasValue(args, "showqueue")) then
         ScubaLoot_Test()
     elseif(ScubaLoot_HasValue(args, "toggle")) then
@@ -370,7 +374,7 @@ end
 function ScubaLoot_GetNameByID(itemLink)
     local name, _, quality, _, _, _, _, _, texture = GetItemInfo(ScubaLoot_LinkToID(itemLink))
     if(quality == nil or quality < 0 or quality > 7) then
-        quality = 0
+        quality = 1
         DEFAULT_CHAT_FRAME:AddMessage("Could not find quality for " .. itemLink)
     end
     return name, texture, quality
