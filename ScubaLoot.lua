@@ -97,6 +97,9 @@ function ScubaLoot_Init()
 
     -- call some functions
     ScubaLoot_FillOfficerList()
+
+    -- also need to hide non needed widgets for non officers
+    ScubaLoot_HideUnnecessaryWidgets()
 end
 
 --==========================================================================================================
@@ -189,20 +192,17 @@ function ScubaLoot_OpenLootSession(arg1)
     -- refill the officer list everytime incase somebody went offline etc
     ScubaLoot_FillOfficerList()
 
-    -- also need to hide non needed widgets for non officers
-    ScubaLoot_HideUnnecessaryWidgets()
-
     -- if item is linked in rw then start a loot session
-    -- do not start if arg1 contains "roll" or "wins" or "tied"
+    -- only start if arg1 contains one or more itemlinks and the word "link"
     local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
-    if(string.find(strlower(arg1), "wins") == nil and string.find(strlower(arg1), "tied") == nil
-            and itemLinks[1] and string.find(strlower(arg1), "roll") == nil and string.find(strlower(arg1), "link") ~= nil) then
+    if(itemLinks[1]and string.find(strlower(arg1), "link") ~= nil) then
         ScubaLoot_SessionOpen = true
         ScubaLoot_UpdateMainItemQueue(itemLinks)
         ScubaLoot_MoveToNextMainItem()
         ScubaLoot_GUIMaximized = true
         ScubaLootFrame:Show()
-    elseif(string.find(strlower(arg1), "wins:") ~= nil) then
+    elseif(string.find(strlower(arg1), "wins:") ~= nil or string.find(strlower(arg1), "tied for")) then
+        -- this will update everybody elses GUI when an item is rewarded
         if(ScubaLoot_QueuedItems[1]) then -- more items in queue
             ScubaLoot_MoveToNextMainItem()
         else
@@ -284,11 +284,6 @@ function ScubaLoot_SkipMainItem()
     if(IsPartyLeader()) then
         if(ScubaLoot_SessionOpen) then
             SendChatMessage("Skipping: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID")
-            if(ScubaLoot_QueuedItems[1]) then -- more items in queue
-                ScubaLoot_MoveToNextMainItem()
-            else
-                ScubaLoot_CloseLootSession()
-            end
         else
             DEFAULT_CHAT_FRAME:AddMessage("Nothing to skip")
         end
@@ -327,10 +322,12 @@ end
 -- arg2
 --    author
 function ScubaLoot_HandleRaidMessage(arg1, arg2)
-    -- need to move to the next main item for everybody that isnt the raid leader
+    -- need to move to the next main item for everybody
     if(string.find(arg1, "Skipping:") ~= nil) then
-        if(IsPartyLeader() == false) then
+        if(ScubaLoot_QueuedItems[1]) then -- more items in queue
             ScubaLoot_MoveToNextMainItem()
+        else
+            ScubaLoot_CloseLootSession()
         end
     end
 end
