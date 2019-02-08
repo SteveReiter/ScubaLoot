@@ -208,11 +208,13 @@ function ScubaLoot_OpenLootSession(arg1)
         else
             ScubaLoot_CloseLootSession()
         end
-        -- clear vote count text in the gui
-        local voteText
+        -- clear vote count text in the gui and uncheck vote boxes
+        local voteText, voteBox
         for i = 1, 40 do
             voteText = getglobal("ScubaLootVoteCount"..i.."Text")
             voteText:SetText("0")
+            voteBox = getglobal("ScubaLootRowCheckBox"..i)
+            voteBox:SetChecked(false)
         end
     end
 end
@@ -268,11 +270,13 @@ function ScubaLoot_MoveToNextMainItem()
 end
 
 function ScubaLoot_AnnounceWinner()
-    local winnerName = ScubaLoot_GetItemWinner()
-    if(string.find(winnerName, ",") ~= nil) then -- tied
-        SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
-    else
-        SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+    if(IsPartyLeader()) then
+        local winnerName = ScubaLoot_GetItemWinner()
+        if(string.find(winnerName, ",") ~= nil) then -- tied
+            SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+        else
+            SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+        end
     end
 end
 
@@ -364,6 +368,10 @@ end
 
 function ScubaLoot_GetNameByID(itemLink)
     local name, _, quality, _, _, _, _, _, texture = GetItemInfo(ScubaLoot_LinkToID(itemLink))
+    if(quality == nil or quality < 0 or quality > 7) then
+        quality = 0
+        DEFAULT_CHAT_FRAME:AddMessage("Could not find quality for " .. itemLink)
+    end
     return name, texture, quality
 end
 
