@@ -453,7 +453,7 @@ function ScubaLoot_GetItemWinner()
         local tempString = ""
         if(table.getn(highestIndexes) > 1) then
             for _, index in highestIndexes do
-                tempString = tempString + ScubaLoot_Sort.Names[index] + ", "
+                tempString = tempString .. ScubaLoot_Sort.Names[index] .. ", "
             end
         else
             tempString = ScubaLoot_Sort.Names[highestIndexes[1]]
