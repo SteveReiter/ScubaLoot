@@ -196,7 +196,7 @@ function ScubaLoot_OpenLootSession(arg1)
     -- do not start if arg1 contains "roll" or "wins" or "tied"
     local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
     if(string.find(strlower(arg1), "wins") == nil and string.find(strlower(arg1), "tied") == nil
-            and itemLinks[1] and string.find(strlower(arg1), "roll") == nil and string.find(strlower(arg1), "link") == nil) then
+            and itemLinks[1] and string.find(strlower(arg1), "roll") == nil and string.find(strlower(arg1), "link") ~= nil) then
         ScubaLoot_SessionOpen = true
         ScubaLoot_UpdateMainItemQueue(itemLinks)
         ScubaLoot_MoveToNextMainItem()
