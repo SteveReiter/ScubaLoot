@@ -6,8 +6,8 @@
 -- *ALL* users of the addon (officers etc) will need to change these variables
 officerRank1 = "Rear Admiral" -- Scuba Cops guild leader rank name
 officerRank2 = "Salty Dog" -- Scuba Cops officer rank name
-officerRank3 = "ExtraRank" -- free rank name, we dont have a third
-ScubaLoot_FinishedVotingThreshold = 4 -- equal or greater will reward the item
+officerRank3 = "ExtraRank" -- free rank name, we dont have a third`
+ScubaLoot_FinishedVotingThreshold = 3 -- equal or greater will reward the item
 -- IMPORTANT - these variables are guild specific, change them to work for yours
 
 ScubaLootTitle = "CLC"
@@ -195,7 +195,7 @@ function ScubaLoot_OpenLootSession(arg1)
     -- if item is linked in rw then start a loot session
     -- only start if arg1 contains one or more itemlinks and the word "link"
     local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
-    if(itemLinks[1]and string.find(strlower(arg1), "link") ~= nil) then
+    if(itemLinks ~= nil and itemLinks[1] and string.find(strlower(arg1), "link") ~= nil) then
         if(ScubaLoot_SessionOpen) then -- just needs to add more items to the queue
             ScubaLoot_UpdateMainItemQueue(itemLinks)
         else
