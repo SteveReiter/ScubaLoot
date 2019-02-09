@@ -77,9 +77,7 @@ function ScubaLoot_ShowVotes()
 end
 
 function ScubaLoot_Test()
-    DEFAULT_CHAT_FRAME:AddMessage("test")
-    local temp = CanEditMOTD()
-    DEFAULT_CHAT_FRAME:AddMessage(tostring(temp))
+
 end
 
 function ScubaLoot_OnLoad()
@@ -108,6 +106,7 @@ function ScubaLoot_Init()
 
     -- also need to hide non needed widgets for non officers
     ScubaLoot_HideUnnecessaryWidgets()
+    DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot - Init Successful")
 end
 
 --==========================================================================================================
@@ -253,7 +252,7 @@ function ScubaLoot_MoveToNextMainItem()
     ScubaLoot_AddMainItemToGUI(nextItem)
     ScubaLoot_ItemBeingDecided = nextItem
     if(IsPartyLeader()) then
-        SendChatMessage("Link for " .. ScubaLoot_LinkToName(nextItem), "RAIDWARNING")
+        SendChatMessage("Link for " .. ScubaLoot_LinkToName(nextItem), "RAID_WARNING")
     end
     -- reset the rows
     ScubaLoot_Sort.Names = {}
@@ -263,15 +262,18 @@ function ScubaLoot_MoveToNextMainItem()
     ScubaLoot_FinishedVotingCount = 0
     local finishedCheckbox = getglobal("FinishedVotingCheckbox")
     finishedCheckbox:SetChecked(false)
+    -- reenable all of the voting boxes
+    local checkBox
+    for i = 1, 40 do
+        checkBox = getglobal("ScubaLootRowCheckBox"..i)
+        checkBox:Enable()
+    end
 end
 
 function ScubaLoot_AnnounceWinner()
     if(IsPartyLeader()) then
         local winnerName = ScubaLoot_GetItemWinner()
         if(string.find(winnerName, ",") ~= nil) then -- tied
-            DEFAULT_CHAT_FRAME:AddMessage(winnerName)
-            winnerName = string.sub(winnerName, 1, -2)
-            DEFAULT_CHAT_FRAME:AddMessage(winnerName)
             SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
         else
             SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
@@ -476,8 +478,12 @@ function ScubaLoot_GetItemWinner()
     else
         local tempString = ""
         if(table.getn(highestIndexes) > 1) then
-            for _, index in highestIndexes do
-                tempString = tempString .. ScubaLoot_Sort.Names[index] .. ", "
+            for count, index in highestIndexes do
+                if(count == table.getn(highestIndexes)) then
+                    tempString = tempString .. ScubaLoot_Sort.Names[index]
+                else
+                    tempString = tempString .. ScubaLoot_Sort.Names[index] .. ", "
+                end
             end
         else
             tempString = ScubaLoot_Sort.Names[highestIndexes[1]]
@@ -746,25 +752,13 @@ end
 
 function ScubaLoot_HideUnnecessaryWidgets()
     if(CanGuildRemove() == nil) then -- not an officer
+        DEFAULT_CHAT_FRAME:AddMessage("Hiding unnecessary widgets")
         -- hide the finished voting button
         FinishedVotingCheckbox:Hide()
         -- hide the skip button
         ScubaLootSkipItem:Hide()
         -- hide anything voting related
         ScubaLootVoteHeader:Hide()
-
-        -- the vote checkbox and vote count are handled in ScubaLoot_UpdateRows()
-    end
-end
-
-function ScubaLoot_ShowOfficerWidgets()
-    if(CanGuildRemove() == nil) then -- not an officer
-        -- hide the finished voting button
-        FinishedVotingCheckbox:Show()
-        -- hide the skip button
-        ScubaLootSkipItem:Show()
-        -- hide anything voting related
-        ScubaLootVoteHeader:Show()
 
         -- the vote checkbox and vote count are handled in ScubaLoot_UpdateRows()
     end
