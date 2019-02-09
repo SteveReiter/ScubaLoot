@@ -20,7 +20,7 @@ A loot session will open when an item is raidwarning'd. Multiple items can be ra
 and will be added to a queue. Members will link their items in raid chat, they can include a
 small note (about 10 characters) and up to two item links. Officers can then vote and when done click the Finished
 checkbox. When the amount of officers is equal or greater than the voting
-threshold(specified in ScubaLoot.lua) the item will be rewarded in raid warning and it will
+threshold(specified in ScubaLoot.lua) the item winner(s) will be displayed in officer chat. Then it will
 move on to the next item in the queue or if the queue is empty the interface will close.
 
 **Notes:**
