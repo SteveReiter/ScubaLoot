@@ -752,7 +752,7 @@ end
 
 function ScubaLoot_HideUnnecessaryWidgets()
     if(CanGuildRemove() == nil) then -- not an officer
-        DEFAULT_CHAT_FRAME:AddMessage("Hiding unnecessary widgets")
+        DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot - Hiding unnecessary widgets")
         -- hide the finished voting button
         FinishedVotingCheckbox:Hide()
         -- hide the skip button
