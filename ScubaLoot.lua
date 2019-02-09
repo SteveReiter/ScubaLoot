@@ -281,6 +281,7 @@ function ScubaLoot_AnnounceWinner()
     if(IsPartyLeader()) then
         local winnerName = ScubaLoot_GetItemWinner()
         if(string.find(winnerName, ",") ~= nil) then -- tied
+            winnerName = string.sub(winnerName, 1, -2)
             SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
         else
             SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
