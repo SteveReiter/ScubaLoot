@@ -7,7 +7,7 @@
 officerRank1 = "Rear Admiral" -- Scuba Cops guild leader rank name
 officerRank2 = "Salty Dog" -- Scuba Cops officer rank name
 officerRank3 = "ExtraRank" -- free rank name, we dont have a third`
-ScubaLoot_FinishedVotingThreshold = 3 -- equal or greater will reward the item
+ScubaLoot_FinishedVotingThreshold = 2 -- equal or greater will reward the item
 -- IMPORTANT - these variables are guild specific, change them to work for yours
 
 ScubaLootTitle = "CLC"
@@ -665,8 +665,20 @@ function ScubaLoot_FinishedVoting()
     local playerName = UnitName("player")
     if(FinishedVotingCheckbox:GetChecked()) then
         SendChatMessage(playerName .. " has finished voting", "OFFICER")
+        -- disable all of the voting boxes
+        local checkBox
+        for i = 1, 40 do
+            checkBox = getglobal("ScubaLootRowCheckBox"..i)
+            checkBox:Disable()
+        end
     else
         SendChatMessage(playerName .. " has not finished voting", "OFFICER")
+        -- enable all of the voting boxes
+        local checkBox
+        for i = 1, 40 do
+            checkBox = getglobal("ScubaLootRowCheckBox"..i)
+            checkBox:Enable()
+        end
     end
 end
 
