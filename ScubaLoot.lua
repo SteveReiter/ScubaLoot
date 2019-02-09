@@ -44,13 +44,15 @@ function SlashCmdList.SCUBALOOT(args)
     end
 
     if(ScubaLoot_HasValue(args, "showqueue")) then
-        ScubaLoot_Test()
+        ScubaLoot_ShowQueue()
     elseif(ScubaLoot_HasValue(args, "toggle")) then
         ScubaLoot_ToggleGUI()
     elseif(ScubaLoot_HasValue(args, "showofficers")) then
         ScubaLoot_ShowOfficers()
     elseif(ScubaLoot_HasValue(args, "showvotes")) then
         ScubaLoot_ShowVotes()
+    elseif(ScubaLoot_HasValue(args, "test")) then
+        ScubaLoot_Test()
     end
 end
 
@@ -75,7 +77,9 @@ function ScubaLoot_ShowVotes()
 end
 
 function ScubaLoot_Test()
-
+    DEFAULT_CHAT_FRAME:AddMessage("test")
+    local temp = CanEditMOTD()
+    DEFAULT_CHAT_FRAME:AddMessage(tostring(temp))
 end
 
 function ScubaLoot_OnLoad()
@@ -198,7 +202,7 @@ function ScubaLoot_OpenLootSession(arg1)
     -- if item is linked in rw then start a loot session
     -- only start if arg1 contains one or more itemlinks and the word "link"
     local itemLinks = ScubaLoot_GetMainItemLinks(arg1)
-    if(itemLinks ~= nil and itemLinks[1] and string.find(strlower(arg1), "link") ~= nil) then
+    if(itemLinks ~= nil and itemLinks[1] and string.find(strlower(arg1), "link") ~= nil and string.find(strlower(arg1), "link for") == nil) then
         if(ScubaLoot_SessionOpen) then -- just needs to add more items to the queue
             ScubaLoot_UpdateMainItemQueue(itemLinks)
         else
@@ -249,7 +253,7 @@ function ScubaLoot_MoveToNextMainItem()
     ScubaLoot_AddMainItemToGUI(nextItem)
     ScubaLoot_ItemBeingDecided = nextItem
     if(IsPartyLeader()) then
-        SendChatMessage("Link for " .. ScubaLoot_LinkToName(nextItem), "RAID")
+        SendChatMessage("Link for " .. ScubaLoot_LinkToName(nextItem), "RAIDWARNING")
     end
     -- reset the rows
     ScubaLoot_Sort.Names = {}
@@ -265,7 +269,9 @@ function ScubaLoot_AnnounceWinner()
     if(IsPartyLeader()) then
         local winnerName = ScubaLoot_GetItemWinner()
         if(string.find(winnerName, ",") ~= nil) then -- tied
+            DEFAULT_CHAT_FRAME:AddMessage(winnerName)
             winnerName = string.sub(winnerName, 1, -2)
+            DEFAULT_CHAT_FRAME:AddMessage(winnerName)
             SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
         else
             SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
@@ -323,7 +329,7 @@ function ScubaLoot_HandleRaidMessage(arg1, arg2)
         else
             ScubaLoot_CloseLootSession()
         end
-        if(ScubaLoot_OfficerList[UnitName("player")] ~= nil) then -- is an officer
+        if(CanGuildRemove()) then -- is an officer
             -- clear vote count text in the gui and uncheck vote boxes
             local voteText, voteBox
             for i = 1, 40 do
@@ -340,7 +346,7 @@ function ScubaLoot_HandleRaidMessage(arg1, arg2)
         else
             ScubaLoot_CloseLootSession()
         end
-        if(ScubaLoot_OfficerList[UnitName("player")] ~= nil) then -- is an officer
+        if(CanGuildRemove()) then -- is an officer
             -- clear vote count text in the gui and uncheck vote boxes
             local voteText, voteBox
             for i = 1, 40 do
@@ -572,7 +578,7 @@ function ScubaLoot_UpdateRows()
                 if(ScubaLoot_GUIMaximized) then
                     item1:Show()
                     note:Show()
-                    if(ScubaLoot_OfficerList[UnitName("player")] ~= nil) then -- is an officer
+                    if(CanGuildRemove()) then -- is an officer
                         itemCheckBox:Show()
                         vote:Show()
                     end
@@ -739,13 +745,26 @@ function ScubaLoot_ToggleGUISize()
 end
 
 function ScubaLoot_HideUnnecessaryWidgets()
-    if(ScubaLoot_OfficerList[UnitName("player")] == nil) then -- not an officer
+    if(CanGuildRemove() == nil) then -- not an officer
         -- hide the finished voting button
         FinishedVotingCheckbox:Hide()
         -- hide the skip button
         ScubaLootSkipItem:Hide()
         -- hide anything voting related
         ScubaLootVoteHeader:Hide()
+
+        -- the vote checkbox and vote count are handled in ScubaLoot_UpdateRows()
+    end
+end
+
+function ScubaLoot_ShowOfficerWidgets()
+    if(CanGuildRemove() == nil) then -- not an officer
+        -- hide the finished voting button
+        FinishedVotingCheckbox:Show()
+        -- hide the skip button
+        ScubaLootSkipItem:Show()
+        -- hide anything voting related
+        ScubaLootVoteHeader:Show()
 
         -- the vote checkbox and vote count are handled in ScubaLoot_UpdateRows()
     end
