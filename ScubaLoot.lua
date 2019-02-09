@@ -118,7 +118,6 @@ end
 --    lineID
 function ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
     if(event == "VARIABLES_LOADED") then
-        this:UnregisterEvent("VARIABLES_LOADED")
         ScubaLoot_Init()
     elseif(event == "CHAT_MSG_RAID_WARNING") then
         ScubaLoot_OpenLootSession(arg1)
@@ -209,21 +208,6 @@ function ScubaLoot_OpenLootSession(arg1)
             ScubaLoot_GUIMaximized = true
             ScubaLootFrame:Show()
         end
-    elseif(string.find(strlower(arg1), "wins:") ~= nil or string.find(strlower(arg1), "tied for")) then
-        -- this will update everybody elses GUI when an item is rewarded
-        if(ScubaLoot_QueuedItems[1]) then -- more items in queue
-            ScubaLoot_MoveToNextMainItem()
-        else
-            ScubaLoot_CloseLootSession()
-        end
-        -- clear vote count text in the gui and uncheck vote boxes
-        local voteText, voteBox
-        for i = 1, 40 do
-            voteText = getglobal("ScubaLootVoteCount"..i.."Text")
-            voteText:SetText("0")
-            voteBox = getglobal("ScubaLootRowCheckBox"..i)
-            voteBox:SetChecked(false)
-        end
     end
 end
 
@@ -282,10 +266,11 @@ function ScubaLoot_AnnounceWinner()
         local winnerName = ScubaLoot_GetItemWinner()
         if(string.find(winnerName, ",") ~= nil) then -- tied
             winnerName = string.sub(winnerName, 1, -2)
-            SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+            SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
         else
-            SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID_WARNING")
+            SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
         end
+        SendChatMessage("Voting complete", "RAID")
     end
 end
 
@@ -337,6 +322,33 @@ function ScubaLoot_HandleRaidMessage(arg1, arg2)
             ScubaLoot_MoveToNextMainItem()
         else
             ScubaLoot_CloseLootSession()
+        end
+        if(ScubaLoot_OfficerList[UnitName("player")] ~= nil) then -- is an officer
+            -- clear vote count text in the gui and uncheck vote boxes
+            local voteText, voteBox
+            for i = 1, 40 do
+                voteText = getglobal("ScubaLootVoteCount"..i.."Text")
+                voteText:SetText("0")
+                voteBox = getglobal("ScubaLootRowCheckBox"..i)
+                voteBox:SetChecked(false)
+            end
+        end
+    elseif(string.find(arg1, "Voting complete")) then
+        -- this will update everybodies GUI when an item is done being voted for
+        if(ScubaLoot_QueuedItems[1]) then -- more items in queue
+            ScubaLoot_MoveToNextMainItem()
+        else
+            ScubaLoot_CloseLootSession()
+        end
+        if(ScubaLoot_OfficerList[UnitName("player")] ~= nil) then -- is an officer
+            -- clear vote count text in the gui and uncheck vote boxes
+            local voteText, voteBox
+            for i = 1, 40 do
+                voteText = getglobal("ScubaLootVoteCount"..i.."Text")
+                voteText:SetText("0")
+                voteBox = getglobal("ScubaLootRowCheckBox"..i)
+                voteBox:SetChecked(false)
+            end
         end
     end
 end
