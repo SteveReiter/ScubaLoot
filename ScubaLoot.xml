@@ -236,7 +236,7 @@
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">
-                        <FontString name="$parentText" inherits="GameFontNormal" text="Finished">
+                        <FontString name="$parentText" inherits="GameFontNormal" text="Announce">
                             <Anchors>
                                 <Anchor point="LEFT" relativePoint="RIGHT">
                                     <Offset>
