@@ -7,7 +7,6 @@
 officerRank1 = "Rear Admiral" -- Scuba Cops guild leader rank name
 officerRank2 = "Salty Dog" -- Scuba Cops officer rank name
 officerRank3 = "ExtraRank" -- free rank name, we dont have a third`
-ScubaLoot_FinishedVotingThreshold = 4 -- equal or greater will reward the item
 -- IMPORTANT - these variables are guild specific, change them to work for yours
 
 ScubaLootTitle = "CLC"
@@ -20,7 +19,6 @@ ScubaLoot_ItemBeingDecided = ""
 ScubaLoot_GUIMaximized = true
 
 ScubaLoot_OfficerList = {}
-ScubaLoot_FinishedVotingCount = 0
 
 ScubaLoot_Sort = {
     Names = {}, -- names of the people linking
@@ -99,7 +97,6 @@ function ScubaLoot_Init()
 
     ScubaLoot_GUIMaximized = true
 
-    ScubaLoot_FinishedVotingCount = 0
 
     -- call some functions
     ScubaLoot_FillOfficerList()
@@ -223,14 +220,11 @@ function ScubaLoot_CloseLootSession()
     end
     ScubaLoot_ItemBeingDecided = ""
     ScubaLoot_QueuedItems = {}
-    ScubaLoot_FinishedVotingCount = 0
 
     -- update the gui
     ScubaLoot_UpdateRows()
     local mainItem = getglobal("ScubaLootMainItem")
     mainItem:Hide()
-    local finishedCheckbox = getglobal("FinishedVotingCheckbox")
-    finishedCheckbox:SetChecked(false)
     ScubaLootFrame:Hide()
 end
 
@@ -258,10 +252,6 @@ function ScubaLoot_MoveToNextMainItem()
     ScubaLoot_Sort.Names = {}
     ScubaLoot_Sort.Links = {}
     ScubaLoot_UpdateRows()
-    -- uncheck ppls finished checkbox
-    ScubaLoot_FinishedVotingCount = 0
-    local finishedCheckbox = getglobal("FinishedVotingCheckbox")
-    finishedCheckbox:SetChecked(false)
     -- reenable all of the voting boxes
     local checkBox
     for i = 1, 40 do
@@ -282,15 +272,15 @@ function ScubaLoot_AnnounceWinner()
     end
 end
 
-function ScubaLoot_SkipMainItem()
+function ScubaLoot_EndMainItem()
     if(IsPartyLeader()) then
         if(ScubaLoot_SessionOpen) then
-            SendChatMessage("Skipping: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID")
+            ScubaLoot_AnnounceWinner()
         else
-            DEFAULT_CHAT_FRAME:AddMessage("Nothing to skip")
+            DEFAULT_CHAT_FRAME:AddMessage("Nothing to end")
         end
     else
-        DEFAULT_CHAT_FRAME:AddMessage("Must be the party leader to skip")
+        DEFAULT_CHAT_FRAME:AddMessage("Must be the party leader to end the vote")
     end
 end
 
@@ -308,13 +298,6 @@ function ScubaLoot_HandleOfficerMessage(arg1, arg2)
             arg1 = string.gsub(arg1, "I unvoted for ", "")
             ScubaLoot_OfficerList[arg2] = ""
             ScubaLoot_UpdateVoteCounts()
-        elseif(string.find(arg1, "has finished voting")) then
-            ScubaLoot_FinishedVotingCount = ScubaLoot_FinishedVotingCount + 1
-            if(ScubaLoot_FinishedVotingCount >= ScubaLoot_FinishedVotingThreshold) then
-                ScubaLoot_AnnounceWinner()
-            end
-        elseif(string.find(arg1, "has not finished voting")) then
-            ScubaLoot_FinishedVotingCount = ScubaLoot_FinishedVotingCount - 1
         end
     end
 end
@@ -325,23 +308,7 @@ end
 --    author
 function ScubaLoot_HandleRaidMessage(arg1, arg2)
     -- need to move to the next main item for everybody
-    if(string.find(arg1, "Skipping:") ~= nil) then
-        if(ScubaLoot_QueuedItems[1]) then -- more items in queue
-            ScubaLoot_MoveToNextMainItem()
-        else
-            ScubaLoot_CloseLootSession()
-        end
-        if(CanGuildRemove()) then -- is an officer
-            -- clear vote count text in the gui and uncheck vote boxes
-            local voteText, voteBox
-            for i = 1, 40 do
-                voteText = getglobal("ScubaLootVoteCount"..i.."Text")
-                voteText:SetText("0")
-                voteBox = getglobal("ScubaLootRowCheckBox"..i)
-                voteBox:SetChecked(false)
-            end
-        end
-    elseif(string.find(arg1, "Voting complete")) then
+    if(string.find(arg1, "Voting complete")) then
         -- this will update everybodies GUI when an item is done being voted for
         if(ScubaLoot_QueuedItems[1]) then -- more items in queue
             ScubaLoot_MoveToNextMainItem()
@@ -671,27 +638,28 @@ function ScubaLoot_RegisterVote(itemID)
     else
         SendChatMessage("I unvoted for " .. list[itemID], "OFFICER")
     end
+
+    if(UnitName("player") == "Starrz" or UnitName("player") == "Kaymage") then
+        local res1 = math.floor(math.random() * 20 + 1)
+        if(res1 == 1) then
+            local res2 = math.floor(math.random() * 5 + 1)
+            if(res2 == 1) then
+                SendChatMessage("I am short fat and gay", "RAID_WARNING")
+            elseif(res2 == 2) then
+                SendChatMessage("Dahhart Plague", "RAID_WARNING")
+            elseif(res2 == 3) then
+                SendChatMessage("Whisper me for fort", "RAID_WARNING")
+            elseif(res2 == 4) then
+                SendChatMessage("Let me tell you the benefits of James Hardie's Hardie Board Fiber Cement Siding. Best Return on Investment for your home that you can get.", "RAID_WARNING")
+            elseif(res2 == 5) then
+                SendChatMessage("Let me tell you about my lord and savior Verne Troyer", "RAID_WARNING")
+            end
+        end
+    end
 end
 
 function ScubaLoot_FinishedVoting()
-    local playerName = UnitName("player")
-    if(FinishedVotingCheckbox:GetChecked()) then
-        SendChatMessage(playerName .. " has finished voting", "OFFICER")
-        -- disable all of the voting boxes
-        local checkBox
-        for i = 1, 40 do
-            checkBox = getglobal("ScubaLootRowCheckBox"..i)
-            checkBox:Disable()
-        end
-    else
-        SendChatMessage(playerName .. " has not finished voting", "OFFICER")
-        -- enable all of the voting boxes
-        local checkBox
-        for i = 1, 40 do
-            checkBox = getglobal("ScubaLootRowCheckBox"..i)
-            checkBox:Enable()
-        end
-    end
+
 end
 
 function ScubaLoot_GetTableLength(tab)
@@ -753,10 +721,8 @@ end
 function ScubaLoot_HideUnnecessaryWidgets()
     if(CanGuildRemove() == nil) then -- not an officer
         DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot - Hiding unnecessary widgets")
-        -- hide the finished voting button
-        FinishedVotingCheckbox:Hide()
-        -- hide the skip button
-        ScubaLootSkipItem:Hide()
+        -- hide the end button
+        ScubaLootEndItem:Hide()
         -- hide anything voting related
         ScubaLootVoteHeader:Hide()
 
