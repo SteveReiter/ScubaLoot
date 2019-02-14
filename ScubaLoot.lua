@@ -101,8 +101,6 @@ function ScubaLoot_Init()
     -- call some functions
     ScubaLoot_FillOfficerList()
 
-    -- also need to hide non needed widgets for non officers
-    ScubaLoot_HideUnnecessaryWidgets()
     DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot - Init Successful")
 end
 
@@ -715,18 +713,6 @@ function ScubaLoot_ToggleGUISize()
         end
         -- update the height
         ScubaLootFrame:SetHeight(80 + ScubaLoot_GetTableLength(list) * 26)
-    end
-end
-
-function ScubaLoot_HideUnnecessaryWidgets()
-    if(CanGuildRemove() == nil) then -- not an officer
-        DEFAULT_CHAT_FRAME:AddMessage("ScubaLoot - Hiding unnecessary widgets")
-        -- hide the end button
-        ScubaLootEndItem:Hide()
-        -- hide anything voting related
-        ScubaLootVoteHeader:Hide()
-
-        -- the vote checkbox and vote count are handled in ScubaLoot_UpdateRows()
     end
 end
 
