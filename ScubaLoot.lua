@@ -274,6 +274,7 @@ function ScubaLoot_EndMainItem()
     if(IsPartyLeader()) then
         if(ScubaLoot_SessionOpen) then
             ScubaLoot_AnnounceWinner()
+            SendChatMessage("Skipping: " .. ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided), "RAID")
         else
             DEFAULT_CHAT_FRAME:AddMessage("Nothing to end")
         end
@@ -381,6 +382,7 @@ function ScubaLoot_LinkToChatLink(itemLink)
         quality = 1
     end
     local r,g,b = GetItemQualityColor(quality)
+
     return "|cff" ..ScubaLoot_rgbToHex({r, g, b}).."|H"..link.."|h["..name.."]|h|r"
 end
 
