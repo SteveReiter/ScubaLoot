@@ -221,9 +221,9 @@
         <Frames>
 
 
-            <!-- FinishedVotingCheckbox - checkbox to designated that you are done voting -->
+            <!-- FinishedVotingCheckbox - checkbox to designated that you are done voting - NO LONGER USING THIS, SAVING FOR REFERENCE-->
 
-            <CheckButton name="FinishedVotingCheckbox" hidden="false">
+            <CheckButton name="FinishedVotingCheckbox" hidden="true">
                 <Size>
                     <AbsDimension x="32" y="32"/>
                 </Size>
@@ -3170,7 +3170,7 @@
                 </Layers>
             </Button>
 
-            <Button name="ScubaLootSkipItem" inherits="GameMenuButtonTemplate" text="Skip">
+            <Button name="ScubaLootEndItem" inherits="GameMenuButtonTemplate" text="End">
                 <Size>
                     <AbsDimension x="50" y="26"/>
                 </Size>
@@ -3183,7 +3183,7 @@
                 </Anchors>
                 <Scripts>
                     <OnClick>
-                            ScubaLoot_SkipMainItem()
+                            ScubaLoot_EndMainItem()
                     </OnClick>
                 </Scripts>
             </Button>
