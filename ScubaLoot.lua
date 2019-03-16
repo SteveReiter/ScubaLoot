@@ -274,7 +274,6 @@ function ScubaLoot_EndMainItem()
     if(IsPartyLeader()) then
         if(ScubaLoot_SessionOpen) then
             ScubaLoot_AnnounceWinner()
-            SendChatMessage("Skipping: " .. ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided), "RAID")
         else
             DEFAULT_CHAT_FRAME:AddMessage("Nothing to end")
         end
