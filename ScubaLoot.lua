@@ -252,7 +252,7 @@ function ScubaLoot_MoveToNextMainItem()
     ScubaLoot_AddMainItemToGUI(nextItem)
     ScubaLoot_ItemBeingDecided = nextItem
     if(IsPartyLeader()) then
-        SendChatMessage("Link for " .. ScubaLoot_LinkToName(nextItem), "RAID_WARNING")
+        SendChatMessage("Link for " .. ScubaLoot_LinkToChatLink(nextItem), "RAID_WARNING")
     end
     -- reset the rows
     ScubaLoot_Sort.Names = {}
@@ -274,9 +274,9 @@ function ScubaLoot_AnnounceWinner()
     if(IsPartyLeader()) then
         local winnerName = ScubaLoot_GetItemWinner()
         if(string.find(winnerName, ",") ~= nil) then -- tied
-            SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
+            SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided), "OFFICER")
         else
-            SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "OFFICER")
+            SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided), "OFFICER")
         end
         SendChatMessage("Voting complete", "RAID")
     end
@@ -285,7 +285,7 @@ end
 function ScubaLoot_SkipMainItem()
     if(IsPartyLeader()) then
         if(ScubaLoot_SessionOpen) then
-            SendChatMessage("Skipping: " .. ScubaLoot_LinkToName(ScubaLoot_ItemBeingDecided), "RAID")
+            SendChatMessage("Skipping: " .. ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided), "RAID")
         else
             DEFAULT_CHAT_FRAME:AddMessage("Nothing to skip")
         end
@@ -407,10 +407,16 @@ function ScubaLoot_LinkToID(itemLink)
     return string.match(itemLink, ":(%d+)")
 end
 
-function ScubaLoot_LinkToName(itemLink)
-    -- item link format ex: |Hitem:6948:0:0:0:0:0:0:0|h[Hearthstone]|h
-    -- matches anything inside square brackets ex: asdasd[abc]asdasd -> abc
-    return string.match(itemLink, "%[(.+)%]")
+function ScubaLoot_LinkToChatLink(itemLink)
+    -- item link format ex: item:7073::::::::::::
+    -- Convert to chat link format ex: |cff9d9d9d|Hitem:7073::::::::::::|h[Broken Fang]|h|r
+    local itemID = ScubaLoot_LinkToID(itemLink)
+    local name, link, quality = GetItemInfo(itemID)
+    if(quality == nil or quality < 0 or quality > 7) then
+        quality = 1
+    end
+    local r,g,b = GetItemQualityColor(quality)
+    return "|cff" ..r..g..b.."|H"..link.."|h["..name.."]|h|r"
 end
 
 function ScubaLoot_GetPlayerRGB(playerName)
